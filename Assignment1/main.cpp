@@ -1,4 +1,5 @@
 #include <iostream>
+#include <limits>
 // Functions
 float FahrenheitToCelsius(float fahrenheit) {
     return (fahrenheit - 32.0f) * 5.0f / 9.0f;
@@ -7,6 +8,15 @@ float CelsiusToFahrenheit(float celsius)
 {
     return celsius * (9.0f / 5.0f) + 32.0f;
 }
+float ChirpsToFahrenheit(float chirps)
+{
+    return chirps * 4.0f;
+}
+bool IsValidTemperature(float fahrenheit)
+{
+    return fahrenheit >= 50.0f;
+}
+
 // Main
 int main() {
     //KittyKatta
@@ -25,32 +35,26 @@ int main() {
     }
 
     //Chirp Chirp Chirp
-    std::string inputTemperature;
-    std::cout << "Input temperature as a format of NumberTemperatureType, Ex. 14f";
     bool isInputValid = false;
+    float ChirpsPer15;
     while (!isInputValid) {
-        std::cin >> inputTemperature;
-        isInputValid = true;
-        char lastCharOfInput = inputTemperature[inputTemperature.length()-1];
-        lastCharOfInput = tolower(lastCharOfInput);
-        if (lastCharOfInput == 'c' || lastCharOfInput == 'f') {
-            for (int i = 0; i < inputTemperature.length() - 1; i++) {
-                if (!std::isdigit(inputTemperature[i])) {
-                    std::cout << "Invalid input, Ex. 14f";
-                    isInputValid = false;
-                    break;
-                }
-            }
+        std::cout << "Input Chirps per 15 seconds";
+        std::cin >> ChirpsPer15;
+        if (std::cin.fail()) {
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            std::cout << "Invalid input. Please enter a number." << std::endl;
         }
         else {
-            isInputValid = false;
-            std::cout << "Missing unit, Ex. 14f";
-            break;
+            isInputValid = true;
         }
     }
-    if (isInputValid) {
-        std::cout << inputTemperature.substr(0, inputTemperature.length()-1);
+    int inputTemperature = ChirpsToFahrenheit(ChirpsPer15);
+    if (!IsValidTemperature(inputTemperature)) {
+        std::cout << "Crickets would not be singing, invalid input." << std::endl;
     }
-
+    else {
+        std::cout << "Temperature in Fahrenheit: " << inputTemperature << std::endl;
+    }
     return 0;
 }
