@@ -1,5 +1,8 @@
 #include <iostream>
 #include <limits>
+#include <cctype>
+#include <conio.h>
+
 // Functions
 float FahrenheitToCelsius(float fahrenheit) {
     return (fahrenheit - 32.0f) * 5.0f / 9.0f;
@@ -15,6 +18,32 @@ float ChirpsToFahrenheit(float chirps)
 bool IsValidTemperature(float fahrenheit)
 {
     return fahrenheit >= 50.0f;
+}
+bool hasLowerCase(const std::string& password) {
+    for (char c : password) {
+        if (std::islower(c)) {
+            return true;
+        }
+    }
+    return false;
+}
+
+bool hasUpperCase(const std::string& password) {
+    for (char c : password) {
+        if (std::isupper(c)) {
+            return true;
+        }
+    }
+    return false;
+}
+
+bool hasNumber(const std::string& password) {
+    for (char c : password) {
+        if (std::isdigit(c)) {
+            return true;
+        }
+    }
+    return false;
 }
 
 // Main
@@ -40,6 +69,7 @@ int main() {
     while (!isInputValid) {
         std::cout << "Input Chirps per 15 seconds";
         std::cin >> ChirpsPer15;
+        // fancy thing that prevents crash on invalid user input
         if (std::cin.fail()) {
             std::cin.clear();
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
@@ -56,5 +86,49 @@ int main() {
     else {
         std::cout << "Temperature in Fahrenheit: " << inputTemperature << std::endl;
     }
+    // Please Choose a Password
+
+
+
+    std::string SavedPassword;
+    bool isValidPassword = false;
+    bool passwordConfirmed = false;
+    while (!passwordConfirmed) {
+        while (!isValidPassword) {
+            std::string password;
+            std::cout << "Please choose a password: ";
+            std::cin >> password;
+            if (password.length() < 8) {
+                std::cout << "Password must be at least 8 characters long" << std::endl;
+                continue;
+            }
+            if (!hasUpperCase(password)) {
+                std::cout << "Password must contain at least one uppercase letter" << std::endl;
+                continue;
+            }
+            if (!hasNumber(password)) {
+                std::cout << "Password must contain at least one number" << std::endl;
+                continue;
+            }
+            if (!hasLowerCase(password)) {
+                std::cout << "Password must contain at least one lowercase letter" << std::endl;
+                continue;
+            }
+            SavedPassword = password;
+            isValidPassword = true;
+
+        }
+        std::cout << "Password accepted. Please re-type password" << std::endl;
+        std::string password;
+        std::cin >> password;
+        if (SavedPassword == password) {
+            std::cout << "Success, New password: " + SavedPassword << std::endl;
+            passwordConfirmed = true;
+        }
+        else {
+            std::cout << "Passwords do not match. Please try again" << std::endl;
+        }
+    }
+
     return 0;
 }
