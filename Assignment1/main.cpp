@@ -45,6 +45,10 @@ bool hasNumber(const std::string& password) {
     }
     return false;
 }
+int randomNumber(const int min, const int max) {
+    const int range = max - min + 1;
+    return rand() % range + min;
+}
 
 // Main
 int main() {
@@ -88,8 +92,6 @@ int main() {
     }
     // Please Choose a Password
 
-
-
     std::string SavedPassword;
     bool isValidPassword = false;
     bool passwordConfirmed = false;
@@ -129,6 +131,61 @@ int main() {
             std::cout << "Passwords do not match. Please try again" << std::endl;
         }
     }
+    // Guess that number
+    bool play = true;
+    while (play) {
+        int lowerBound;
+        int upperBound;
+        int guess;
+        bool isGuessValid = false;
+        std::cout << "Lets play a game where you guess a number I choose" << std::endl;
+        std::cout << "Please enter the upper bounding number" << std::endl;
+        std::cin >> upperBound;
+        while (upperBound <= lowerBound || !lowerBound || lowerBound < 0) {
+            std::cout << "Please enter the lower bounding number" << std::endl;
+            std::cin >> lowerBound;
+            if (lowerBound > upperBound) {
+                std::cout << "lower bound must be less than upper bound" << std::endl;
+            }
+        }
+        int numberToGuess = randomNumber(lowerBound, upperBound);
+        std::cout << "I've chosen a number! Try to guess" << std::endl;
+        while (!isGuessValid) {
+            std::cin >> guess;
+            if (guess > numberToGuess) {
+                std::cout << "Too high" << std::endl;
+            }
+            else if (guess < numberToGuess) {
+                std::cout << "Too low" << std::endl;
+            }
+            else if (guess == numberToGuess){
+                std::cout << "You guessed it!" << std::endl;
+                isGuessValid = true;
+            }
+            else {
+                std::cout << "How did we get here?" << std::endl;
+            }
+        }
+        std::cout << "Would you like to play again? (y/n)" << std::endl;
+        char answer;
+        std::cin >> answer;
+        if (answer == 'y') {
+            play = true;
+        }
+        else {
+            play = false;
+        }
+    }
 
+    /* Reflection
+     * Debugging was kind of annoying, only mildly - since I had to constantly change a bool to prevent code running
+     *
+     * Difficulty/Length
+     * p1 = Very easy ~ 5 min
+     * p2 = hard (found this one especially difficult) ~ 40 min
+     * p3 = easy ~ 10 min
+     * p4 = medium ~ 20 min
+     *
+     */
     return 0;
 }
