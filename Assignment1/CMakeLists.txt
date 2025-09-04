@@ -3,4 +3,5 @@ project(FirstTest)
 
 set(CMAKE_CXX_STANDARD 23)
 
-add_executable(FirstTest main.cpp)
+add_executable(FirstTest main.cpp
+        main.hpp)
