@@ -45,6 +45,30 @@ bool hasNumber(const std::string& password) {
     }
     return false;
 }
+std::string getPassword() {
+    std::string password;
+    char input = 0;
+    std::cout << std::endl;
+    while (true) {
+        input = _getch();
+        if (input == 13) {
+            std::cout << std::endl;
+            break;
+        }
+        else if (input == 8) {
+            if (password.length() > 0) {
+                password.pop_back();
+                std::cout << "\b \b";
+            }
+        }
+        else {
+            password += input;
+            std::cout << "*";
+            std::cout.flush();
+        }
+    }
+    return password;
+}
 int randomNumber(const int min, const int max) {
     const int range = max - min + 1;
     return rand() % range + min;
@@ -95,11 +119,14 @@ int main() {
     std::string SavedPassword;
     bool isValidPassword = false;
     bool passwordConfirmed = false;
+    // Clear input buffer before password input
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
     while (!passwordConfirmed) {
         while (!isValidPassword) {
             std::string password;
             std::cout << "Please choose a password: ";
-            std::cin >> password;
+            password = getPassword();
             if (password.length() < 8) {
                 std::cout << "Password must be at least 8 characters long" << std::endl;
                 continue;
@@ -120,9 +147,9 @@ int main() {
             isValidPassword = true;
 
         }
-        std::cout << "Password accepted. Please re-type password" << std::endl;
+        std::cout << "Password accepted. Please re-type password";
         std::string password;
-        std::cin >> password;
+        password = getPassword();
         if (SavedPassword == password) {
             std::cout << "Success, New password: " + SavedPassword << std::endl;
             passwordConfirmed = true;
