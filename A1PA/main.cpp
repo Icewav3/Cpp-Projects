@@ -2,6 +2,7 @@
 #include <limits>
 #include <cctype>
 #include <conio.h>
+#include <string>
 
 // Functions
 float FahrenheitToCelsius(float fahrenheit) {
@@ -119,8 +120,6 @@ int main() {
     std::string SavedPassword;
     bool isValidPassword = false;
     bool passwordConfirmed = false;
-    // Clear input buffer before password input
-    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
     while (!passwordConfirmed) {
         while (!isValidPassword) {
