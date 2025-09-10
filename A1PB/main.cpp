@@ -1,177 +1,79 @@
 #include <iostream>
-#include <limits>
 #include <cctype>
 #include <conio.h>
 #include <string>
-
+#include <cmath>
+#include "Utility.h"
 // Functions
-float FahrenheitToCelsius(float fahrenheit) {
-    return (fahrenheit - 32.0f) * 5.0f / 9.0f;
-}
-float CelsiusToFahrenheit(float celsius)
-{
-    return celsius * (9.0f / 5.0f) + 32.0f;
-}
-float ChirpsToFahrenheit(float chirps)
-{
-    return chirps * 4.0f;
-}
-bool IsValidTemperature(float fahrenheit)
-{
-    return fahrenheit >= 50.0f;
-}
-bool hasLowerCase(const std::string& password) {
-    for (char c : password) {
-        if (std::islower(c)) {
-            return true;
-        }
-    }
-    return false;
-}
-
-bool hasUpperCase(const std::string& password) {
-    for (char c : password) {
-        if (std::isupper(c)) {
-            return true;
-        }
-    }
-    return false;
-}
-
-bool hasNumber(const std::string& password) {
-    for (char c : password) {
-        if (std::isdigit(c)) {
-            return true;
-        }
-    }
-    return false;
-}
-std::string getPassword() {
-    std::string password;
-    char input = 0;
-    std::cout << std::endl;
-    while (true) {
-        input = _getch();
-        if (input == 13) {
-            std::cout << std::endl;
-            break;
-        }
-        else if (input == 8) {
-            if (password.length() > 0) {
-                password.pop_back();
-                std::cout << "\b \b";
-            }
-        }
-        else {
-            password += input;
-            std::cout << "*";
-            std::cout.flush();
-        }
-    }
-    return password;
-}
 int randomNumber(const int min, const int max) {
     const int range = max - min + 1;
     return rand() % range + min;
 }
 
+void renderStat(const std::string& label, int statValue, int maxValue, int width, char fill, char empty, bool showRatio, bool showPercentage) {
+    int numIndicators = 0;
+    std::string statBar{};
+    //name & open bar
+    statBar += label + " [";
+    //calculate number of indicators we need
+    float indicatorValue = std::floor(maxValue / width);
+    numIndicators = std::floor(statValue / indicatorValue);
+    std::string bar = std::string(numIndicators, fill);
+    bar += std::string( width - numIndicators, empty);
+    //add indicators
+    statBar += bar;
+    //close bar
+    statBar += "] ";
+    //Add ratio
+    if (showRatio) {
+        statBar += std::to_string(statValue) + "/" + std::to_string(maxValue) + " ";
+    }
+    //Add percentage
+    if (showPercentage) {
+        int percent = static_cast<float>(statValue)/maxValue*1000.0f;
+        percent = clamp(percent, 0, 1000);
+        int num = percent / 10;
+        int decimal = percent % 10;
+        statBar += std::to_string(num) + "." + std::to_string(decimal) + " % ";
+    }
+    //out value
+    std::cout << statBar << std::endl;
+}
+void renderStat(const std::string& label, int statValue, int maxValue) {
+    renderStat(label, statValue, maxValue, 20, '#', '-', true, true);
+}
+void renderStat(const std::string& label, double percent) {
+    renderStat(label, (int)(percent*10), 1000, 20, '#', '-', false, true);
+}
+
 // Main
 int main() {
-    //KittyKatta
-    for (int i = 1; i <= 100; i++) {
-        std::string formatted_text = "";
-        if (i % 3 == 0) {
-            formatted_text = "Kitty";
-        }
-        if (i % 5 == 0) {
-            formatted_text = formatted_text + "Katta";
-        }
-        if (formatted_text == "") {
-            formatted_text = std::to_string(i);
-        }
-        std::cout << formatted_text << std::endl;
-    }
-
-    //Chirp Chirp Chirp
-    bool isInputValid = false;
-    float ChirpsPer15;
-    while (!isInputValid) {
-        std::cout << "Input Chirps per 15 seconds";
-        std::cin >> ChirpsPer15;
-        // fancy thing that prevents crash on invalid user input
-        if (std::cin.fail()) {
-            std::cin.clear();
-            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-            std::cout << "Invalid input. Please enter a number." << std::endl;
-        }
-        else {
-            isInputValid = true;
-        }
-    }
-    int inputTemperature = ChirpsToFahrenheit(ChirpsPer15);
-    if (!IsValidTemperature(inputTemperature)) {
-        std::cout << "Crickets would not be singing, invalid input." << std::endl;
-    }
-    else {
-        std::cout << "Temperature in Fahrenheit: " << inputTemperature << std::endl;
-    }
-    // Please Choose a Password
-
-    std::string SavedPassword;
-    bool isValidPassword = false;
-    bool passwordConfirmed = false;
-
-    while (!passwordConfirmed) {
-        while (!isValidPassword) {
-            std::string password;
-            std::cout << "Please choose a password: ";
-            password = getPassword();
-            if (password.length() < 8) {
-                std::cout << "Password must be at least 8 characters long" << std::endl;
-                continue;
-            }
-            if (!hasUpperCase(password)) {
-                std::cout << "Password must contain at least one uppercase letter" << std::endl;
-                continue;
-            }
-            if (!hasNumber(password)) {
-                std::cout << "Password must contain at least one number" << std::endl;
-                continue;
-            }
-            if (!hasLowerCase(password)) {
-                std::cout << "Password must contain at least one lowercase letter" << std::endl;
-                continue;
-            }
-            SavedPassword = password;
-            isValidPassword = true;
-
-        }
-        std::cout << "Password accepted. Please re-type password";
-        std::string password;
-        password = getPassword();
-        if (SavedPassword == password) {
-            std::cout << "Success, New password: " + SavedPassword << std::endl;
-            passwordConfirmed = true;
-        }
-        else {
-            std::cout << "Passwords do not match. Please try again" << std::endl;
-        }
-    }
     // Guess that number
     bool play = true;
     while (play) {
-        int lowerBound;
-        int upperBound;
+        int lowerBound = -1;
+        int upperBound = 0;
         int guess;
         bool isGuessValid = false;
-        std::cout << "Lets play a game where you guess a number I choose" << std::endl;
-        std::cout << "Please enter the upper bounding number" << std::endl;
-        std::cin >> upperBound;
-        while (upperBound <= lowerBound || !lowerBound || lowerBound < 0) {
-            std::cout << "Please enter the lower bounding number" << std::endl;
+        std::cout << "Do you want to play a game where you guess a number, that I choose? (y/n)" << std::endl;
+        char answer;
+        std::cin >> answer;
+        if (answer == 'n') {
+            play = false;
+            break;
+        }
+        std::cout << "Please enter the lower bounding number" << std::endl;
+        while (lowerBound < 0) {
             std::cin >> lowerBound;
+            if (lowerBound < 0) {
+                std::cout << "Please enter a non negative number" << std::endl;
+            }
+        }
+        while (upperBound <= lowerBound) {
+            std::cout << "Please enter the upper bounding number" << std::endl;
+            std::cin >> upperBound;
             if (lowerBound > upperBound) {
-                std::cout << "lower bound must be less than upper bound" << std::endl;
+                std::cout << "upper bound must be more than lower bound" << std::endl;
             }
         }
         int numberToGuess = randomNumber(lowerBound, upperBound);
@@ -193,25 +95,29 @@ int main() {
             }
         }
         std::cout << "Would you like to play again? (y/n)" << std::endl;
-        char answer;
         std::cin >> answer;
-        if (answer == 'y') {
-            play = true;
-        }
-        else {
+        if (answer == 'n') {
             play = false;
         }
+
     }
+    //TUI Stats Bar
+    renderStat("Health", 100, 100);
+    renderStat("Mana", 25, 100);
+    renderStat("Stamina", 0, 100);
+    //some overload
+    renderStat("Charge", 12.5);
+    renderStat("Speed", 27.93);
+    //max overload
+    renderStat("Apple Power", 10, 20, 10, '*', '_', false, true);
+    renderStat("Banana Power", 10, 20, 10, '=', '.', true, true);
 
     /* Reflection
-     * Debugging was kind of annoying, only mildly - since I had to constantly change a bool to prevent code running
+     *
      *
      * Difficulty/Length
-     * p1 = Very easy ~ 5 min
-     * p2 = hard (found this one especially difficult) ~ 40 min
-     * p3 = easy ~ 10 min
-     * p4 = medium ~ 20 min
-     *
+     * p1 = Very easy ~ 20 min
+     * p2 = hard took me a long time to go read stuff ~ 90 min
      */
     return 0;
 }
