@@ -3,7 +3,7 @@
 #include <conio.h>
 #include <string>
 #include <cmath>
-#include "Utility.h"
+#include "Utility.hpp"
 // Functions
 int randomNumber(const int min, const int max) {
     const int range = max - min + 1;
