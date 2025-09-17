@@ -11,6 +11,8 @@ endif()
 # Add all subprojects
 add_subdirectory(A1PA)
 add_subdirectory(A1PB)
+#Assignment 2
 add_subdirectory(A2PA)
+add_subdirectory(A2PB)
 # Add more projects as needed
 

@@ -1,10 +1,13 @@
 #include "game.hpp"
 #include <raylib.h>
 
+//type in text while getting your text exploded
+
 int main() {
     // Initialize raylib window
-    const int screenWidth = 800;
-    const int screenHeight = 450;
+    constexpr int screenWidth = 800;
+    constexpr int screenHeight = 450;
+
 
     InitWindow(screenWidth, screenHeight, "Raylib Game Window");
     SetTargetFPS(60);
