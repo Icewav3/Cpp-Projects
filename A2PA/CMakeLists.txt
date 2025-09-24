@@ -8,7 +8,10 @@ set(CMAKE_CXX_STANDARD 14)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 
 # Define the executable
-add_executable(A2PA main.cpp)
+add_executable(A2PA main.cpp
+        Bioinformatics/Bioinformatics.cpp
+        Bioinformatics/Bioinformatics.h
+)
 
 # Optional: Additional dependencies
 # target_link_libraries(A1PA some_library)
