@@ -1,5 +1,7 @@
 ﻿#include "Bioinformatics.h"
 
+#include <map>
+
 std::string GetInput() {
 }
 

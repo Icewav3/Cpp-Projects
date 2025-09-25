@@ -31,9 +31,8 @@ int main() {
         std::cout << "Enter second sequence: ";
         std::cin >> input2;
     }
-
-    //No Function Side Effects: Functions should only alter the state of their own local variables. No function should access or modify a variable outside of its local scope.
-
+    std::cout << "Hamming Distance: " << CalculateHammingDistance(
+        input1, input2) << '\n';
 
     return 0;
 }
