@@ -6,7 +6,7 @@
 #define CPP_PROJECTS_MAIN_H
 
 
-class game {
+class Game {
 };
 
 
