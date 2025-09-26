@@ -65,6 +65,8 @@ public:
 
 	void SetValue(float inputValue);
 
+	float getValue();
+
 private:
 	WidgetPosition position{};
 	WidgetColors colors{};
