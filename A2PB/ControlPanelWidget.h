@@ -59,23 +59,23 @@ private:
 
 class RadialDial {
 public:
-	RadialDial(WidgetPosition position, WidgetColors, int value, int min, int max);
+	RadialDial(WidgetPosition position, WidgetColors colors, float value, float min, float max);
 
 	void Update();
 
-	void SetValue(float value);
+	void SetValue(float inputValue);
 
 private:
 	WidgetPosition position{};
 	WidgetColors colors{};
-	int value;
-	int min;
-	int max;
+	float value;
+	float min;
+	float max;
 };
 
 class Slider {
 public:
-	Slider(WidgetPosition position, WidgetColors, float value, float min, float max);
+	Slider(WidgetPosition position, WidgetColors colors, float value, float min, float max);
 
 	void Update();
 

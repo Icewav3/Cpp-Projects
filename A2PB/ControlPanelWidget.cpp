@@ -3,6 +3,8 @@
 
 #include <string>
 
+#include "../A1PB/Utility.hpp"
+
 //Display Indicator class
 DisplayIndicator::DisplayIndicator(WidgetPosition position, WidgetColors colors, bool isOn, std::string text) {
 	this->isOn = isOn;
@@ -89,8 +91,33 @@ bool Button::GetValue() {
 	return isOn;
 }
 
-void RadialDial(WidgetPosition position, WidgetColors, int value, int min, int max) {
+RadialDial::RadialDial(WidgetPosition position, WidgetColors colors, float value, float min, float max) {
+	this->position = position;
+	this->value = value;
+	this->min = min;
+	this->max = max;
+	this->colors = colors;
+	this->value = value;
 }
 
-void Slider(WidgetPosition position, WidgetColors, float value, float min, float max) {
+void RadialDial::Update() {
+}
+
+void RadialDial::SetValue(float inputValue) {
+	value = clamp(inputValue, min, max);
+}
+
+Slider::Slider(WidgetPosition position, WidgetColors colors, float value, float min, float max) {
+	this->position = position;
+	this->value = value;
+	this->min = min;
+	this->max = max;
+	this->colors = colors;
+	this->value = value;
+}
+
+void Slider::Update() {
+}
+
+float Slider::getValue() {
 }
