@@ -14,12 +14,12 @@ int main() {
     std::string data{
         "AGCTTTTCATTCTGACTGCAACGGGCAATATGTCTCTGTGTGGATTAAAAAAAGAGTGTCTGATAGCAGC"
     };
-    std::cout << SumCharacters(data) << '\n';
+    std::cout << Bioinformatics::SumCharacters(data) << '\n';
 
     //Hamming Distance (std::string)
     const std::string data1{"GAGCCTACTAACGGGAT"};
     const std::string data2{"CATCGTAATGACGGCCT"};
-    std::cout << "Hamming Distance: " << CalculateHammingDistance(data1, data2)
+    std::cout << "Hamming Distance: " << Bioinformatics::CalculateHammingDistance(data1, data2)
             << '\n';
     //Bioinformatics Processing Program
     std::string input1 = "1";
@@ -31,7 +31,7 @@ int main() {
         std::cout << "Enter second sequence: ";
         std::cin >> input2;
     }
-    std::cout << "Hamming Distance: " << CalculateHammingDistance(
+    std::cout << "Hamming Distance: " << Bioinformatics::CalculateHammingDistance(
         input1, input2) << '\n';
 
     return 0;

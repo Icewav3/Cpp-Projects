@@ -7,6 +7,8 @@
 #include "../A1PB/Utility.hpp"
 
 //Display Indicator class
+/// Constructor for a display indicator without blinking functionality
+/// Initializes all member variables and sets blinking interval to 0
 DisplayIndicator::DisplayIndicator(WidgetPosition position, WidgetColors colors, bool isOn, std::string text) {
 	this->isOn = isOn;
 	this->position = position;
@@ -15,6 +17,8 @@ DisplayIndicator::DisplayIndicator(WidgetPosition position, WidgetColors colors,
 	this->blinkInterval = 0;
 }
 
+/// Constructor for a display indicator with optional blinking functionality
+/// Initializes all member variables including the blinking interval
 DisplayIndicator::DisplayIndicator(WidgetPosition position, WidgetColors colors, bool isOn, std::string text,
                                    float blinkInterval) {
 	this->isOn = isOn;
@@ -24,6 +28,8 @@ DisplayIndicator::DisplayIndicator(WidgetPosition position, WidgetColors colors,
 	this->blinkInterval = blinkInterval;
 }
 
+/// Updates and renders the display indicator with optional blinking effect
+/// Handles blinking logic based on current time and renders rectangle with text
 void DisplayIndicator::Update() {
 	Color currentColor;
 	if (blinkInterval != 0 && isOn) {
@@ -47,12 +53,16 @@ void DisplayIndicator::Update() {
 	}
 }
 
+/// Sets the current state of the indicator
+/// Updates the internal state which affects the visual appearance during next Update() call
 void DisplayIndicator::SetValue(bool value) {
 	isOn = value;
 }
 
 //Button class
 
+/// Constructor for a button widget
+/// Initializes button state, position, colors, and toggleable behavior
 Button::Button(WidgetPosition position, WidgetColors colors, bool isOn, bool isToggleable) {
 	this->isOn = isOn;
 	this->position = position;
@@ -60,6 +70,8 @@ Button::Button(WidgetPosition position, WidgetColors colors, bool isOn, bool isT
 	this->isToggleable = isToggleable;
 }
 
+/// Updates the button state based on mouse input and renders it
+/// Handles both toggle and momentary button behaviors with mouse collision detection
 void Button::Update() {
 	Vector2 mousePos = GetMousePosition();
 	bool mouseClicked = IsMouseButtonPressed(MOUSE_BUTTON_LEFT);
@@ -89,10 +101,14 @@ void Button::Update() {
 	DrawRectangleLines((int) position.x, (int) position.y, (int) position.width, (int) position.height, BLACK);
 }
 
+/// Gets the current state of the button
+/// Returns whether the button is currently pressed/active
 bool Button::GetValue() {
 	return isOn;
 }
 
+/// Constructor for a radial dial widget
+/// Initializes dial with position, colors, value range, and current value
 RadialDial::RadialDial(WidgetPosition position, WidgetColors colors, float value, float min, float max) {
 	this->position = position;
 	this->value = value;
@@ -102,6 +118,8 @@ RadialDial::RadialDial(WidgetPosition position, WidgetColors colors, float value
 	this->value = value;
 }
 
+/// Updates the dial state based on mouse input and renders it
+/// Handles mouse interaction for value adjustment and draws the dial with indicator
 void RadialDial::Update() {
 	Vector2 mousePos = GetMousePosition();
 	bool mouseDown = IsMouseButtonDown(MOUSE_BUTTON_LEFT);
@@ -140,14 +158,20 @@ void RadialDial::Update() {
 	DrawCircle(centerX, centerY, 3, BLACK);
 }
 
+/// Sets the current value of the dial
+/// Clamps the input value to the valid range and updates the internal value
 void RadialDial::SetValue(float inputValue) {
 	value = clamp(inputValue, min, max);
 }
 
+/// Gets the current value of the dial
+/// Returns the current value within the min/max range
 float RadialDial::getValue() {
 	return value;
 }
 
+/// Constructor for a horizontal slider widget
+/// Initializes slider with position, colors, value range, and current value
 Slider::Slider(WidgetPosition position, WidgetColors colors, float value, float min, float max) {
 	this->position = position;
 	this->value = value;
@@ -157,6 +181,8 @@ Slider::Slider(WidgetPosition position, WidgetColors colors, float value, float 
 	this->value = value;
 }
 
+/// Updates the slider state based on mouse input and renders it
+/// Handles horizontal mouse dragging for value adjustment and draws slider with handle
 void Slider::Update() {
 	Vector2 mousePos = GetMousePosition();
 	bool mouseDown = IsMouseButtonDown(MOUSE_BUTTON_LEFT);
@@ -183,6 +209,8 @@ void Slider::Update() {
 	              (int) position.height, colors.active);
 }
 
+/// Gets the current value of the slider
+/// Returns the current value within the min/max range
 float Slider::getValue() {
 	return value;
 }
