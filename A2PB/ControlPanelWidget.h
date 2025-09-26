@@ -57,6 +57,35 @@ private:
 	bool isToggleable;
 };
 
-void RadialDial(WidgetPosition position, WidgetColors, int value, int min, int max);
+class RadialDial {
+public:
+	RadialDial(WidgetPosition position, WidgetColors, int value, int min, int max);
 
-float Slider(WidgetPosition position, WidgetColors, float value, float min, float max);
+	void Update();
+
+	void SetValue(float value);
+
+private:
+	WidgetPosition position{};
+	WidgetColors colors{};
+	int value;
+	int min;
+	int max;
+};
+
+class Slider {
+public:
+	Slider(WidgetPosition position, WidgetColors, float value, float min, float max);
+
+	void Update();
+
+	float getValue();
+
+private:
+	WidgetPosition position{};
+	WidgetColors colors{};
+	float value;
+	float min;
+	float max;
+};
+

@@ -92,5 +92,5 @@ bool Button::GetValue() {
 void RadialDial(WidgetPosition position, WidgetColors, int value, int min, int max) {
 }
 
-float Slider(WidgetPosition position, WidgetColors, float value, float min, float max) {
+void Slider(WidgetPosition position, WidgetColors, float value, float min, float max) {
 }
