@@ -14,5 +14,7 @@ add_subdirectory(A1PB)
 #Assignment 2
 add_subdirectory(A2PA)
 add_subdirectory(A2PB)
+#Assignment 3
+add_subdirectory(A3PA)
 # Add more projects as needed
 
