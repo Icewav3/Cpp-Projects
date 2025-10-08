@@ -13,11 +13,16 @@ namespace FrogToad {
 		const int topPadding = 120;
 		// Title
 		DrawText("Toads & Frogs", leftPadding, 30, 30, BLACK);
-		DrawText("1..7 = move index;  R = restart", leftPadding, 80, 20, BLACK);
+		DrawText("1 to 7 = move index;  R = restart, Q = close", leftPadding, 80, 20, BLACK);
 		// Draw board
 		const int rectSize = 90;
 		for (int i = 0; i < m.BoardSize; i++) {
 			DrawRectangleLines(leftPadding + (i * rectSize), topPadding, rectSize, rectSize, BLACK);
+		}
+		//Draw numbers
+		for (int i = 0; i < m.BoardSize; i++) {
+			DrawText(TextFormat("%d", i + 1), leftPadding + (i * rectSize) + rectSize / 2, topPadding + rectSize, 20,
+			         BLACK);
 		}
 		//Draw forgs
 		for (int i = 0; i < m.BoardSize; i++) {

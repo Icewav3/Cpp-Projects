@@ -41,7 +41,9 @@ int main() {
 	SetTargetFPS(60);
 	view.init();
 	while (!WindowShouldClose()) {
-		ctrl.nextMove(model);
+		if (!ctrl.nextMove(model)) {
+			break;
+		}
 
 		BeginDrawing();
 		view.draw(model);

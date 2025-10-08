@@ -38,7 +38,7 @@ namespace FrogToad {
          * Implementations should read input (human or AI) and apply it to the
          * model—usually by delegating to applyCommand.
          */
-        virtual void nextMove(BoardModel&) = 0;
+        virtual bool nextMove(BoardModel &) = 0;
 
         /**
          * @brief Translate an ASCII character into a model command.

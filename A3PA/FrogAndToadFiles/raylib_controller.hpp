@@ -4,6 +4,6 @@
 namespace FrogToad {
     class RaylibController : public IController {
     public:
-        void nextMove(BoardModel& m) override;
+	    bool nextMove(BoardModel &m) override;
     };
 }
