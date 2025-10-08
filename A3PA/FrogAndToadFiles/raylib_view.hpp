@@ -3,11 +3,18 @@
 #include "raylib.h"
 
 namespace FrogToad {
-    class RaylibView : public IView {
-    public:
-        void draw(const BoardModel& m) override;
+	class RaylibView : public IView {
+	public:
+		void init();
 
-        int windowW() const;
-        int windowH() const;
-    };
-}
+		void draw(const BoardModel &m) override;
+
+		int windowW() const;
+
+		int windowH() const;
+
+	private:
+		Texture2D frogTexture;
+		Texture2D toadTexture;
+	};
+};
