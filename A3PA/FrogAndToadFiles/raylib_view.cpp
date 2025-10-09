@@ -2,11 +2,21 @@
 #include <string>
 
 namespace FrogToad {
+	/**
+	 * @brief Initializes the view, loading textures for game elements.
+	 *
+	 * This method loads the textures for the frog and toad from the specified paths.
+	 */
 	void RaylibView::init() {
 		frogTexture = LoadTexture("Art/Frog.png");
 		toadTexture = LoadTexture("Art/Toad.png");
 	}
 
+	/**
+	 * Draw the game board and pieces.
+	 *
+	 * @param m Reference to the current board model. @param
+	 * */
 	void RaylibView::draw(const BoardModel &m) {
 		ClearBackground(RAYWHITE);
 		const int leftPadding = 40;
@@ -35,8 +45,24 @@ namespace FrogToad {
 			Texture2D texture = (cell == BoardModel::Cell::Frog) ? frogTexture : toadTexture;
 			DrawTextureEx(texture, Cell, 0, scale, WHITE);
 		}
+
+		if (m.isSolved()) {
+			DrawText("Congratulations, you solved it!", leftPadding, topPadding + rectSize + 40, 20, BLACK);
+		}
 	}
 
+	/**
+	 * @brief Get the width of the window.
+	 *
+	 * This function returns the current width of the window used for rendering.
+	 *
+	 * @return int The width of the window in pixels.
+	 */
 	int RaylibView::windowW() const { return 800; }
+	/**
+	 * @brief Get the height of the window.
+	 *
+	 * @return The height of the window in pixels.
+	 */
 	int RaylibView::windowH() const { return 300; }
 }
