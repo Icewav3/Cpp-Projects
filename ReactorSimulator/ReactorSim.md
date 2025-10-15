@@ -1,5 +1,17 @@
 ﻿## Reactor Parts
 
+### PWR reactor notes
+ - 200-300 rods
+ - 80-100 tonnes of uranium
+ - 150-250 fuel assemblies
+ - Water in the reactor core reaches about 325°C
+   - must be kept under 150 atmospheres of
+ - (Safety) If water boils reactor slows & shutdown
+ - Dump boron in to slow/stop reaction
+
+
+### PHWR (Pressurized Heavy Water Reactor)
+
 ### Pressure vessel / Reactor Core
 
 - Control Rods
