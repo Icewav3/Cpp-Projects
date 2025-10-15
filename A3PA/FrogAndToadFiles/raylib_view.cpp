@@ -8,8 +8,8 @@ namespace FrogToad {
 	 * This method loads the textures for the frog and toad from the specified paths.
 	 */
 	void RaylibView::init() {
-		frogTexture = LoadTexture("Art/Frog.png");
-		toadTexture = LoadTexture("Art/Toad.png");
+		frogTexture = LoadTexture(RESOURCES_PATH "Frog.png");
+		toadTexture = LoadTexture(RESOURCES_PATH "Toad.png");
 	}
 
 	/**
