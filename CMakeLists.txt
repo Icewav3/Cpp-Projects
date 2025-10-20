@@ -16,5 +16,7 @@ add_subdirectory(A2PA)
 add_subdirectory(A2PB)
 #Assignment 3
 add_subdirectory(A3PA)
+#raylib final
+add_subdirectory(ReactorSim)
 # Add more projects as needed
 
