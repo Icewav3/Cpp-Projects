@@ -12,12 +12,12 @@
         +Update(DeltaTime: float)
     }
     GameManager --|> EventManager: Calls
-    EventManager --> Event: Has
     class EventManager {
         -float elapsedTime
         -Event ActiveEvent
         +Update(DeltaTime: float)
     }
+    EventManager --> Event: Has
     class Event {
     }
     class CanvasManager {
@@ -31,7 +31,7 @@
         +constructor(xpos: float, ypox: float, length: float, width: float)
         +bool isbroken
         +Update(DeltaTime: float)
-        -Draw()
+        *Draw()
     }
     Instrument <|-- Display: inherits
     class Display {
@@ -56,15 +56,16 @@
         -float ctrl_rod_pos
         -float pressure
         -float heat_output
-        -float coolant_flowrate
         +Update(DeltaTime: float)
-        -UpdateCtrlRodPos()
+        +UpdateCtrlRodPos(NewPos: float)
         +getPressure()
         +getTemp()
         +getSteamOut()
     }
+    Reactor --> Coolant: Thermal Energy
     Turbine <-- ReactorManager: Manages
     class Turbine {
+        +constructor(maxRPM: int, maxElectricityOut: int, RPMtoElectricCharge: float)
         -float RPM
         -float Electricity
         +Update(DeltaTime: float)
@@ -73,11 +74,12 @@
     }
     ReactorManager --> Coolant: Manages
     Turbine <-- Coolant: Steam
-    Reactor --> Coolant: Thermal Energy
     class Coolant {
+        +constructor(MaxFlow: float)
         -float flowrate
         -float tempIn
         -float tempOut
         -float ThermalTransfer
         +Update(DeltaTime: float)
+        +UpdateCoolantValve(Input: float)
     }
