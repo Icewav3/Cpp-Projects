@@ -3,6 +3,4 @@
         main.cpp
         Classes/GameManager.cpp
         Classes/GameManager.h
-        RESOURCES
-        resources
 )
