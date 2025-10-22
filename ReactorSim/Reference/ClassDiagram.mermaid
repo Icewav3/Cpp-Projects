@@ -11,7 +11,7 @@
         +CanvasManager
         +Update(DeltaTime: float)
     }
-    GameManager --|> EventManager: Calls
+    GameManager --> EventManager: Calls
     EventManager --> Event: Has
     class EventManager {
         -float elapsedTime
@@ -24,7 +24,6 @@
         +list<Instrument> instruments
         +Initialize()
         +Update(DeltaTime: float)
-        -canEat()
     }
     class Instrument {
         <<abstract>>
@@ -49,6 +48,7 @@
         +Reactor: reactor
         +Turbine: turbine
         +Coolant: coolant
+        +Update()
     }
     Reactor <-- ReactorManager: Manages
     class Reactor {

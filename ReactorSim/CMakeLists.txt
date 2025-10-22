@@ -9,6 +9,8 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 
 # Define the executable
 add_executable(ReactorSim main.cpp
+        Classes/GameManager.cpp
+        Classes/GameManager.h
 )
 
 # Optional: Additional dependencies
