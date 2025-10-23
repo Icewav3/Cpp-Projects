@@ -3,4 +3,8 @@
         main.cpp
         Classes/GameManager.cpp
         Classes/GameManager.h
+        Classes/CanvasManager.cpp
+        Classes/CanvasManager.h
+        Classes/Instrument.cpp
+        Classes/Instrument.h
 )
