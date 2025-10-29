@@ -1,5 +1,7 @@
 # Nuclear Reactor Control Panel Simulator 🏭⚛️
 
+//TODO part 2 & rest of 3
+
 **Disclaimer:**
 
 Binary language models were used in writing this proposal overseen & guided by a Biological-based language model.
@@ -24,34 +26,29 @@ to earn revenue. The analog control panel aesthetic provides an immersive 1970s-
 **1.3** Mermaid Diagram showing the functional layout of the planned codebase.
 
 **1.4** Core reactor simulation implemented with temperature, power output, and control rod position variables updating
-each frame based on simplified physics.
+each frame based on simplified physics. **FIXME**
 
-**1.5** Control rod position slider (0–100%) with mouse drag interaction that directly affects reactor power output with
-immediate visual feedback on power gauge.
+**1.5** Control rod position slider (0–100%) with mouse drag interaction.
 
 **1.6** Coolant system with flow rate variable and pump speed slider control (0–100%) that affects heat removal rate
-from reactor core.
+from reactor core and to steam turbine.
 
 **1.7** Analog-style reactor core temperature gauge displaying current temperature in Celsius with color-coded zones (
-green = 280–550°C safe, yellow = 550–700°C warning, red = 700–800°C danger) and smooth needle animation.
+green = 280–550°C safe, yellow = 550–700°C warning, red = 700–800°C danger).
 
-**1.8** Analog-style reactor power output gauge showing thermal megawatts (0–1000 MW) with needle display and numerical
-readout beneath gauge.
+**1.8** Analog-style Turbine RPM gauge with needle (0-2000 RPM) 1800 RPM is ideal.
 
-**1.9** Emergency SCRAM button implemented as large red button that instantly sets control rods to 100% insertion,
-shutting down nuclear reaction with visual feedback (button depression animation, optional alarm sound).
+**1.9** SCRAM button shuts off reactor by setting control rods to 100% insertion (can be tripped if turbine RPM
+exceeds 2000 RPM)
 
-**1.10** Generator electrical power output display showing megawatts electrical (MWe) produced, presented as analog
-meter with needle and numerical display (electrical output = thermal power × steam valve position × 0.35).
+**1.10** Generator electrical power output display showing megawatts electrical (MWe) produced 8 segment display.
 
-**1.11** Basic win condition: Successfully maintain power output within grid demand range (±50 MW tolerance) for 120
-consecutive seconds while keeping temperature below 700°C.
+**1.11** Score system: Score increases when within (0-100MWe) to the target power ouput, increase scales with accuracy
 
 **1.12** Basic loss condition: Reactor meltdown occurs when core temperature exceeds 800°C or Reactor explodes if
-pressure hits 20 MPa, triggering game over screen with statistics (time survived, revenue earned).
+pressure hits 20 MPa.
 
-**1.13** Reset button that restarts simulation with default initial conditions (all gauges to startup state, timer
-reset, revenue reset).
+**1.13** Reset button that restarts simulation with default initial conditions
 
 **1.14** Game timer displayed as MM:SS format that starts when reactor power exceeds 100 MW and stops on win/loss
 conditions.
@@ -109,14 +106,15 @@ notification sound. **(3 marks)**
 
 **3.2** Tutorial mode with guided 4-step sequence teaching: (1) Adjust control rods to increase power, (2) Start coolant
 pump, (3) Open steam valve to generate electricity, (4) Execute SCRAM shutdown. Text overlays with arrows point to
-specific controls, checkmarks indicate step completion. **(4 marks)**
+specific controls, checkmarks indicate step completion. Timer does not start yet. **(4 marks)**
 
 **3.3** Enhanced reactor physics including pressure relief valve that automatically vents when pressure exceeds 18 MPa (
 with valve indicator light and optional hissing sound), coolant temperature display, and steam quality indicator showing
 if coolant is approaching boiling point (343°C). **(4 marks)**
 
-**3.4** Post-game statistics screen showing detailed session breakdown: total time, revenue earned, number of events
-encountered, times ECCS was used, highest temperature reached, average power output, and demand fulfillment percentage.
+**3.4** Post-game statistics screen showing detailed (Choose some of the following) session breakdown: total time,
+revenue earned, number of events encountered, times ECCS was used, highest temperature reached, average power output,
+and demand fulfillment percentage.
 **(3 marks)**
 
 ---

@@ -1,12 +1,12 @@
-//
-// Created by cdorman on 10/23/2025.
-//
-
 #ifndef CPP_PROJECTS_CANVASMANAGER_H
 #define CPP_PROJECTS_CANVASMANAGER_H
 
+#include <raylib.h>
+#include "Dial.h"
 
 class CanvasManager {
+public:
+	void Update(float DeltaTime);
 };
 
 

@@ -1,18 +1,29 @@
-//
-// Created by cdorman on 10/23/2025.
-//
-
 #ifndef CPP_PROJECTS_INSTRUMENT_H
 #define CPP_PROJECTS_INSTRUMENT_H
 
-
 class Instrument {
 public:
-    Instrument(float xpos, float ypos, float length, float width);
+	virtual ~Instrument() = default;
 
-    virtual void Update(float DeltaTime) = 0;
-    virtual void Draw();
+	Instrument(float xpos, float ypos, float length, float width)
+		: IsBroken(false),
+		  xpos_(xpos),
+		  ypos_(ypos),
+		  length_(length),
+		  width_(width) {
+	}
+
+	virtual void Update(float DeltaTime) = 0;
+
+	bool IsBroken;
+
+protected:
+	virtual void Draw();
+
+	float xpos_;
+	float ypos_;
+	float length_;
+	float width_;
 };
-
 
 #endif //CPP_PROJECTS_INSTRUMENT_H

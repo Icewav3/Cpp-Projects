@@ -1,10 +1,10 @@
-﻿add_raylib_executable(ReactorSim
+﻿file(GLOB_RECURSE CLASS_SOURCES "Classes/*.cpp")
+file(GLOB_RECURSE CLASS_HEADERS "Classes/*.h")
+
+add_raylib_executable(ReactorSim
         SOURCES
         main.cpp
-        Classes/GameManager.cpp
-        Classes/GameManager.h
-        Classes/CanvasManager.cpp
-        Classes/CanvasManager.h
-        Classes/Instrument.cpp
-        Classes/Instrument.h
+        ${CLASS_SOURCES}
+        ${CLASS_HEADERS}
+
 )

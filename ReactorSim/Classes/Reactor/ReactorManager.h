@@ -1,0 +1,9 @@
+﻿#ifndef CPP_PROJECTS_REACTORMANAGER_H
+#define CPP_PROJECTS_REACTORMANAGER_H
+
+
+class ReactorManager {
+};
+
+
+#endif //CPP_PROJECTS_REACTORMANAGER_H
