@@ -1,11 +1,6 @@
 # Nuclear Reactor Control Panel Simulator 🏭⚛️
 
 //TODO part 2 & rest of 3
-
-**Disclaimer:**
-
-Binary language models were used in writing this proposal overseen & guided by a Biological-based language model.
-
 ## Project Overview
 
 A real-time analog-style nuclear reactor control panel simulation game built in C++ with Raylib. Players manage a
@@ -500,10 +495,9 @@ enum EventType {
 
 ## References
 
-- Pressurized Water Reactor operational principles
-- Control room ergonomics and analog interface design
-- Raylib documentation: https://www.raylib.com
-- Reactor simulator educational resources
+- Images of analog control panels for various purposes
+- [Raylib documentation](https://www.raylib.com)
+- [Candu Reactor statistics](https://www.xylenepower.com/CANDU%20Reactors.htm)
 
 ---
 

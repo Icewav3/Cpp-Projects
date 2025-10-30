@@ -6,6 +6,8 @@ class Turbine {
 public:
 	Turbine(int maxRPM, int maxElectricityOut, float RPMtoElectricCharge);
 	void Update(float DeltaTime);
+	float GetRPM();
+	float GetPowerOut();
 
 private:
 	float RPM;

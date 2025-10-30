@@ -14,6 +14,7 @@ private:
 	float TempOut;
 	float ThermalTransfer;
 	float MaxFlow;
+	float calculateThermalTransfer();
 };
 
 

@@ -1,5 +1,4 @@
 ﻿#include "Turbine.h"
-#include "Turbine.h"
 
 Turbine::Turbine(int maxRPM, int maxElectricityOut, float RPMtoElectricCharge)
 	: MaxRPM(maxRPM)
@@ -13,6 +12,14 @@ void Turbine::Update(float DeltaTime) {
 	//TODO: Update turbine state based on steam input
 	CalculateRPM();
 	CalculatePowerOut();
+}
+
+float Turbine::GetRPM() {
+	return RPM;
+}
+
+float Turbine::GetPowerOut() {
+	return RPM;
 }
 
 void Turbine::CalculateRPM() {

@@ -15,3 +15,7 @@ void Coolant::Update(float DeltaTime) {
 void Coolant::UpdateCoolantValve(float Input) {
 	//TODO: Update valve position and adjust flow rate
 }
+
+float Coolant::calculateThermalTransfer() {
+	ThermalTransfer =
+}
