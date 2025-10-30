@@ -4,6 +4,16 @@
 
 class Coolant {
 public:
+	explicit Coolant(float maxFlow);
+	void Update(float DeltaTime);
+	void UpdateCoolantValve(float Input);
+
+private:
+	float FlowRate;
+	float TempIn;
+	float TempOut;
+	float ThermalTransfer;
+	float MaxFlow;
 };
 
 

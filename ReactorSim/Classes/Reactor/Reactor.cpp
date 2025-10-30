@@ -1,24 +1,31 @@
 ﻿#include "Reactor.h"
 
+Reactor::Reactor(float controlRodPosition, float temp, float pressure, float heatOutput)
+	: ControlRodPosition(controlRodPosition)
+	  , Temp(temp)
+	  , Pressure(pressure)
+	  , HeatOutput(heatOutput) {
+}
+
 void Reactor::Update(float DeltaTime) {
-	//TODO: Update reactor temperature, pressure, and heat output based on control rod position
+	//TODO: Update reactor core temperature and pressure calculations
 }
 
-void Reactor::UpdateCtrlRodPos(float NewPos) {
-	//TODO: Update control rod position and recalculate reactor parameters
+void Reactor::UpdateControlRodPosition(float Position) {
+	//TODO: Update control rod position and affect reactor behavior
 }
 
-float Reactor::getPressure() {
+float Reactor::GetPressure() {
 	//TODO: Return current reactor pressure
-	return pressure;
+	return Pressure;
 }
 
-float Reactor::getTemp() {
+float Reactor::GetTemp() {
 	//TODO: Return current reactor temperature
-	return temp;
+	return Temp;
 }
 
-float Reactor::getSteamOut() {
-	//TODO: Calculate and return steam output based on current reactor conditions
-	return heat_output;
+float Reactor::GetHeatOutput() {
+	//TODO: Calculate and return steam output
+	return HeatOutput;
 }

@@ -4,21 +4,19 @@
 
 class Reactor {
 public:
+	Reactor(float controlRodPosition, float temp, float pressure, float heatOutput);
 	void Update(float DeltaTime);
-
 	void UpdateControlRodPosition(float Position);
 
 	float GetPressure();
-
 	float GetHeatOutput();
-
 	float GetTemp();
 
 private:
-	float controlRodPosition;
-	float temp;
-	float pressure;
-	float heatOutput;
+	float ControlRodPosition;
+	float Temp;
+	float Pressure;
+	float HeatOutput;
 };
 
 

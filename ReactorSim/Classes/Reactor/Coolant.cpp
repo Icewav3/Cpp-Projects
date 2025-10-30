@@ -1,7 +1,11 @@
 ﻿#include "Coolant.h"
 
-Coolant::Coolant(float MaxFlow) : maxFlow(MaxFlow), flowrate(0), tempIn(0), tempOut(0), ThermalTransfer(0) {
-	//TODO: Initialize coolant system with maximum flow rate
+Coolant::Coolant(float maxFlow)
+	: MaxFlow(maxFlow)
+	  , FlowRate(0.0f)
+	  , TempIn(0.0f)
+	  , TempOut(0.0f)
+	  , ThermalTransfer(0.0f) {
 }
 
 void Coolant::Update(float DeltaTime) {
