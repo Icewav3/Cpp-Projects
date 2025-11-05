@@ -1,4 +1,5 @@
 ﻿#include "Reactor.h"
+#include <cstdlib>
 
 Reactor::Reactor(float controlRodPosition, float temp, float pressure, float heatOutput)
 	: ControlRodPosition(controlRodPosition)
@@ -6,13 +7,14 @@ Reactor::Reactor(float controlRodPosition, float temp, float pressure, float hea
 	  , Pressure(pressure)
 	  , HeatOutput(heatOutput) {
 }
+	float maxTemp = 1000;
 
 void Reactor::Update(float DeltaTime) {
 	//TODO: Update reactor core temperature and pressure calculations
 }
 
 void Reactor::UpdateControlRodPosition(float Position) {
-	//TODO: Update control rod position and affect reactor behavior
+	HeatOutput = std::abs(1 - Position) * maxTemp;
 }
 
 float Reactor::GetPressure() {
@@ -21,7 +23,6 @@ float Reactor::GetPressure() {
 }
 
 float Reactor::GetTemp() {
-	//TODO: Return current reactor temperature
 	return Temp;
 }
 

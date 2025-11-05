@@ -18,7 +18,7 @@ public:
 	bool IsBroken;
 
 protected:
-	virtual void Draw();
+	virtual void Draw() = 0;
 
 	float xpos_;
 	float ypos_;

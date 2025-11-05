@@ -11,17 +11,8 @@
         +CanvasManager
         +Update(DeltaTime: float)
     }
-    GameManager --> EventManager: Calls
-    class EventManager {
-        -float elapsedTime
-        -Event ActiveEvent
-        +Update(DeltaTime: float)
-    }
-    EventManager --> Event: Has
-    class Event {
-    }
     class CanvasManager {
-        +list<Instrument> instruments
+        +list<STD::shared_ptr Instrument> instruments
         +Initialize()
         +Update(DeltaTime: float)
     }
