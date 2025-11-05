@@ -1,6 +1,7 @@
 # Nuclear Reactor Control Panel Simulator 🏭⚛️
 
 //TODO part 2 & rest of 3
+
 ## Project Overview
 
 A real-time analog-style nuclear reactor control panel simulation game built in C++ with Raylib. Players manage a
@@ -20,8 +21,9 @@ to earn revenue. The analog control panel aesthetic provides an immersive 1970s-
 
 **1.3** Mermaid Diagram showing the functional layout of the planned codebase.
 
-**1.4** Core reactor simulation implemented with temperature, power output, and control rod position variables updating
-each frame based on simplified physics. **FIXME**
+**1.4** Analog-style reactor pressure gauge displaying current pressure **TODO** in Celsius with color-coded
+zones (
+green = 280–550°C safe, yellow = 550–700°C warning, red = 700–800°C danger).
 
 **1.5** Control rod position slider (0–100%) with mouse drag interaction.
 

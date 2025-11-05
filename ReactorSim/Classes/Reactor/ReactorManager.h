@@ -12,7 +12,20 @@ private:
 	Coolant *coolant;
 
 public:
+	ReactorManager();
+
+	~ReactorManager();
+
 	void Update(float DeltaTime);
+
+	// Accessors for UI
+	float GetReactorTemp() const;
+
+	float GetCoolantTemp() const;
+
+	float GetTurbineRPM() const;
+
+	float GetTurbinePowerOut() const;
 };
 
 #endif //CPP_PROJECTS_REACTORMANAGER_H
