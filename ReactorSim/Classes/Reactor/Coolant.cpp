@@ -16,6 +16,22 @@ void Coolant::UpdateCoolantValve(float Input) {
 	//TODO: Update valve position and adjust flow rate
 }
 
+float Coolant::GetCoolantThermalTransfer() {
+	//todo
+}
+
+float Coolant::GetCoolantTempIn() {
+	return TempIn;
+}
+
+float Coolant::GetCoolantTempOut() {
+	return TempOut;
+}
+
+float Coolant::GetCoolantFlowRate() {
+	return FlowRate;
+}
+
 float Coolant::calculateThermalTransfer() {
-	ThermalTransfer =
+	ThermalTransfer = 0;
 }

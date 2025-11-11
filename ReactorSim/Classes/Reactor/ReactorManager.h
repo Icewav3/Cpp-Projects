@@ -16,7 +16,7 @@ public:
 
 	~ReactorManager();
 
-	void Update(float DeltaTime);
+	void Update(float DeltaTime, float userInput = 0.0f);
 
 	// Accessors for UI
 	float GetReactorTemp() const;

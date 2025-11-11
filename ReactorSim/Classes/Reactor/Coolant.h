@@ -5,8 +5,18 @@
 class Coolant {
 public:
 	explicit Coolant(float maxFlow);
+
 	void Update(float DeltaTime);
+
 	void UpdateCoolantValve(float Input);
+
+	float GetCoolantThermalTransfer();
+
+	float GetCoolantFlowRate();
+
+	float GetCoolantTempIn();
+
+	float GetCoolantTempOut();
 
 private:
 	float FlowRate;
@@ -14,6 +24,7 @@ private:
 	float TempOut;
 	float ThermalTransfer;
 	float MaxFlow;
+
 	float calculateThermalTransfer();
 };
 

@@ -12,7 +12,7 @@ ReactorManager::~ReactorManager() {
 	delete coolant;
 }
 
-void ReactorManager::Update(float DeltaTime) {
+void ReactorManager::Update(float DeltaTime, float userInput) {
 	// Update all components
 	reactor->Update(DeltaTime);
 	turbine->Update(DeltaTime);
@@ -20,9 +20,9 @@ void ReactorManager::Update(float DeltaTime) {
 
 	// Pass data between systems
 	float heatOutput = reactor->GetHeatOutput();
-	coolant->UpdateCoolantValve(heatOutput);
+	coolant->UpdateCoolantValve(userInput);
 
-	float coolantFlowRate = coolant->FlowRate;
+	float coolantFlowRate = coolant->GetCoolantFlowRate();
 	turbine->Update(coolantFlowRate);
 
 	float turbineRPM = turbine->GetRPM();
@@ -34,7 +34,7 @@ float ReactorManager::GetReactorTemp() const {
 }
 
 float ReactorManager::GetCoolantTemp() const {
-	return coolant->TempOut;
+	return coolant->GetCoolantTempOut();
 }
 
 float ReactorManager::GetTurbineRPM() const {

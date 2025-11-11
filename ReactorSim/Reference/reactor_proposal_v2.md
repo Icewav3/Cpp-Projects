@@ -26,7 +26,7 @@ to earn revenue. The analog control panel aesthetic provides an immersive 1970s-
 **1.5** Control rod position slider (0–100%) with mouse drag interaction.
 
 **1.6** Coolant system with flow rate variable and pump speed slider control (0–100%) that affects heat removal rate
-from reactor core and to steam turbine.
+from reactorcore and to steam turbine.
 
 **1.7** Reactor core temperature display in Celsius (with basic indications of safe operating threshold).
 
@@ -101,7 +101,8 @@ notification sound. **(3 marks)**
 pump, (3) Open steam valve to generate electricity, (4) Execute SCRAM shutdown. Text overlays with arrows point to
 specific controls, checkmarks indicate step completion. Timer does not start yet. **(4 marks)**
 
-**3.3** Change all displays to use Analog-style gauge or dial style displays, this includes making a display class **(4 marks)**
+**3.3** Change all displays to use Analog-style gauge or dial style displays, this includes making a display class **(4
+marks)**
 
 **3.4** Post-game statistics screen showing detailed (Choose some of the following) session breakdown: total time,
 revenue earned, number of events encountered, times ECCS was used, highest temperature reached, average power output,
@@ -114,7 +115,7 @@ and demand fulfillment percentage.
 
 ### Event Trigger Mechanism
 
-- First event triggers 60-90 seconds after reactor startup (power > 100 MW)
+- FirstEvent triggers 60-90 seconds after reactor startup (power > 100 MW)
 - Subsequent events trigger 60-90 seconds after previous event ends
 - Only one event active at a time
 - Event duration: 30-45 seconds
