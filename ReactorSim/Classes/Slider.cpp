@@ -30,7 +30,7 @@ Slider::Slider(
 	  isHovered_(false),
 	  dragOffset_({0, 0}) {
 	// Determine orientation based on dimensions
-	isHorizontal_ = length_ > width_;
+	isHorizontal_ = length_ > height_;
 }
 
 void Slider::Update(float DeltaTime) {
@@ -93,7 +93,7 @@ void Slider::Draw() {
 		} else {
 			// Label above vertical slider
 			DrawText(labelText,
-			         xpos_ + (width_ - textWidth) / 2,
+			         xpos_ + (height_ - textWidth) / 2,
 			         ypos_ - fontSize_ - labelSpacing_,
 			         fontSize_, textColor_);
 		}
@@ -108,16 +108,16 @@ void Slider::Draw() {
 		if (isHorizontal_) {
 			// Min on left, max on right
 			DrawText(minText, xpos_ - MeasureText(minText, fontSize_) - minMaxSpacing_,
-			         ypos_ + (width_ - fontSize_) / 2, fontSize_, textColor_);
+			         ypos_ + (height_ - fontSize_) / 2, fontSize_, textColor_);
 			DrawText(maxText, xpos_ + length_ + minMaxSpacing_,
-			         ypos_ + (width_ - fontSize_) / 2, fontSize_, textColor_);
+			         ypos_ + (height_ - fontSize_) / 2, fontSize_, textColor_);
 		} else {
 			// Min at bottom, max at top
 			int minWidth = MeasureText(minText, fontSize_);
 			int maxWidth = MeasureText(maxText, fontSize_);
-			DrawText(maxText, xpos_ + (width_ - maxWidth) / 2,
+			DrawText(maxText, xpos_ + (height_ - maxWidth) / 2,
 			         ypos_ - fontSize_ - minMaxSpacing_, fontSize_, textColor_);
-			DrawText(minText, xpos_ + (width_ - minWidth) / 2,
+			DrawText(minText, xpos_ + (height_ - minWidth) / 2,
 			         ypos_ + length_ + minMaxSpacing_, fontSize_, textColor_);
 		}
 	}
@@ -130,19 +130,19 @@ void Slider::Draw() {
 	Vector2 handlePos = GetHandlePosition();
 	if (isHorizontal_) {
 		DrawText(valueText, handlePos.x - valueWidth / 2,
-		         ypos_ + width_ + minMaxSpacing_, fontSize_, textColor_);
+		         ypos_ + height_ + minMaxSpacing_, fontSize_, textColor_);
 	} else {
-		DrawText(valueText, xpos_ + width_ + minMaxSpacing_,
+		DrawText(valueText, xpos_ + height_ + minMaxSpacing_,
 		         handlePos.y - fontSize_ / 2, fontSize_, textColor_);
 	}
 }
 
 Rectangle Slider::GetTrackBounds() const {
 	if (isHorizontal_) {
-		float trackY = ypos_ + (width_ - trackThickness_) / 2;
+		float trackY = ypos_ + (height_ - trackThickness_) / 2;
 		return {xpos_, trackY, length_, trackThickness_};
 	} else {
-		float trackX = xpos_ + (width_ - trackThickness_) / 2;
+		float trackX = xpos_ + (height_ - trackThickness_) / 2;
 		return {trackX, ypos_, trackThickness_, length_};
 	}
 }
@@ -171,10 +171,10 @@ Vector2 Slider::GetHandlePosition() const {
 	float position = MapValueToPosition(currentValue_);
 
 	if (isHorizontal_) {
-		return {xpos_ + position, ypos_ + width_ / 2};
+		return {xpos_ + position, ypos_ + height_ / 2};
 	} else {
 		// Vertical: position from bottom to top (inverted for intuitive control)
-		return {xpos_ + width_ / 2, ypos_ + length_ - position};
+		return {xpos_ + height_ / 2, ypos_ + length_ - position};
 	}
 }
 

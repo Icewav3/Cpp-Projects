@@ -12,7 +12,7 @@ public:
 		float xpos,
 		float ypos,
 		float length,
-		float width,
+		float height,
 		float min,
 		float max,
 		float value,
