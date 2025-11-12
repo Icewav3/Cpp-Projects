@@ -19,11 +19,11 @@ public:
 	float GetCoolantTempOut();
 
 private:
+	float MaxFlow;
 	float FlowRate;
 	float TempIn;
 	float TempOut;
 	float ThermalTransfer;
-	float MaxFlow;
 
 	float calculateThermalTransfer();
 };

@@ -1,11 +1,11 @@
 ﻿#include "Coolant.h"
 
 Coolant::Coolant(float maxFlow)
-	: MaxFlow(maxFlow)
-	  , FlowRate(0.0f)
-	  , TempIn(0.0f)
-	  , TempOut(0.0f)
-	  , ThermalTransfer(0.0f) {
+	: MaxFlow(maxFlow),
+	  FlowRate(0.0f),
+	  TempIn(0.0f),
+	  TempOut(0.0f),
+	  ThermalTransfer(0.0f) {
 }
 
 void Coolant::Update(float DeltaTime) {
