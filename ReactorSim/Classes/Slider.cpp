@@ -4,7 +4,7 @@ Slider::Slider(
 	float xpos,
 	float ypos,
 	float length,
-	float width,
+	float height,
 	float minValue,
 	float maxValue,
 	float initialValue,
@@ -15,7 +15,7 @@ Slider::Slider(
 	Color trackColor,
 	Color handleColor,
 	Color textColor)
-	: Instrument(xpos, ypos, length, width),
+	: Instrument(xpos, ypos, length, height),
 	  minValue_(minValue),
 	  maxValue_(maxValue),
 	  currentValue_(std::clamp(initialValue, minValue, maxValue)),

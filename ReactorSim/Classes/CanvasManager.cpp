@@ -17,8 +17,8 @@ void CanvasManager::CreateSlider() {
 	coolantSlider = new Slider(
 		GetScreenWidth() * 0.5f - 100,
 		GetScreenHeight() * 0.8f,
-		200,
 		20,
+		200,
 		0.0f,
 		100.0f,
 		50.0f,

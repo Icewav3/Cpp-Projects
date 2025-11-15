@@ -13,7 +13,7 @@ public:
 		float xpos,
 		float ypos,
 		float length,
-		float width,
+		float height,
 		float minValue,
 		float maxValue,
 		float initialValue = 0.0f,
