@@ -6,9 +6,9 @@
 #include "Classes/Reactor/ReactorManager.h"
 
 int main() {
-	// Initialize the window
-	const int screenWidth = 1980;
-	const int screenHeight = 1080;
+	// Initialize the window TODO may need to refactor for web iframes
+	const int screenWidth = GetMonitorWidth(0);
+	const int screenHeight = GetMonitorHeight(0);
 
 	InitWindow(screenWidth, screenHeight, "raylib empty window example");
 
