@@ -25,29 +25,51 @@ void Dial::Update(float DeltaTime) {
 }
 
 void Dial::Draw() {
-	// Draw gauge outline
+	// Draw gauge outline with vintage colors
 	float radius = size_.x > size_.y ? size_.y * 0.5f : size_.x * 0.5f;
 	Vector2 center = {position_.x + radius, position_.y + radius};
 
-	DrawCircle(center.x, center.y, radius, BLACK);
-	DrawCircle(center.x, center.y, radius * 0.95f, WHITE);
+	// Vintage control panel styling
+	DrawCircle(center.x, center.y, radius, kVintageBrown);
+	DrawCircle(center.x, center.y, radius * 0.95f, kVintageBeige);
+	DrawCircle(center.x, center.y, radius * 0.9f, kVintageWhite);
+
+	// Draw scale marks
+	for (int i = 0; i <= 10; i++) {
+		float angle = (i / 10.0f) * 180 - 90; // -90 to 90 degrees
+		float markRadius = radius * 0.85f;
+		float markEndRadius = radius * 0.8f;
+
+		float radians = angle * PI / 180.0f;
+		Vector2 markStart = {center.x + cos(radians) * markRadius, center.y + sin(radians) * markRadius};
+		Vector2 markEnd = {center.x + cos(radians) * markEndRadius, center.y + sin(radians) * markEndRadius};
+
+		DrawLineEx(markStart, markEnd, 2, kVintageBlack);
+	}
 
 	// Draw needle
 	auto drawStart = Vector2(0, 0);
-
 	float percentage = (currentValue - minValue) / (maxValue - minValue);
-	float needleLength = radius * 0.9f;
+	float needleLength = radius * 0.75f;
 	auto drawEnd = drawStart + Vector2(-needleLength, 0.0f);
 
-	// Rotate matrix
+	// Rotate matrix for needle
 	rlPushMatrix();
 	rlTranslatef(center.x, center.y, 0.0f);
-	DrawText(label.c_str(), 0, radius * 0.8f, 4, BLACK);
-	rlRotatef(percentage * 180, 0, 0, 1); // twists camera
-
-	DrawLineEx(drawStart, drawEnd, 3, RED);
-
+	rlRotatef(percentage * 180 - 90, 0, 0, 1); // -90 to 90 degrees
+	DrawLineEx(drawStart, drawEnd, 4, kVintageRed);
 	rlPopMatrix();
+
+	// Draw center dot
+	DrawCircle(center.x, center.y, radius * 0.05f, kVintageBlack);
+
+	// Draw label centered below the dial
+	if (!label.empty()) {
+		int textWidth = MeasureText(label.c_str(), kDefaultFontSize);
+		int labelX = center.x - textWidth / 2;
+		int labelY = position_.y + size_.y + kDefaultPadding;
+		DrawText(label.c_str(), labelX, labelY, kDefaultFontSize, kDefaultTextColor);
+	}
 }
 
 void Dial::SetTargetValue(float value) {

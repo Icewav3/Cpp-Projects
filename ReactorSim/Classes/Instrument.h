@@ -42,10 +42,19 @@ protected:
 	Vector2 size_;
 	Rectangle bounds_;
 
-	// Common styling constants
-	static constexpr Color kDefaultTextColor = BLACK;
-	static constexpr Color kDefaultBackgroundColor = WHITE;
-	static constexpr Color kDefaultBorderColor = BLACK;
+	static constexpr Color kVintageBeige = {240, 230, 200, 255}; // Sun-bleached beige
+	static constexpr Color kVintageBrown = {139, 120, 93, 255}; // Faded brown
+	static constexpr Color kVintageGreen = {85, 107, 47, 255}; // Military olive green
+	static constexpr Color kVintageRed = {139, 69, 19, 255}; // Rust red
+	static constexpr Color kVintageYellow = {218, 165, 32, 255}; // Aged gold/yellow
+	static constexpr Color kVintageBlack = {47, 47, 47, 255}; // Aged black
+	static constexpr Color kVintageWhite = {250, 245, 235, 255}; // Off-white/cream
+	static constexpr Color kVintageOrange = {205, 133, 63, 255}; // Faded orange
+
+	// Common styling constants - vintage nuclear control panel theme
+	static constexpr Color kDefaultTextColor = kVintageBlack;
+	static constexpr Color kDefaultBackgroundColor = kVintageBeige;
+	static constexpr Color kDefaultBorderColor = kVintageBrown;
 	static constexpr int kDefaultFontSize = 12;
 	static constexpr float kDefaultPadding = 5.0f;
 };

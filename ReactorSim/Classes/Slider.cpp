@@ -12,7 +12,7 @@ Slider::Slider(float x, float y, float width, float height,
 	  is_dragging_(false),
 	  is_hovered_(false) {
 	AutoConfigureLayout();
-	SetTheme(BLUE); // Default theme
+	SetTheme(kVintageYellow); // Vintage nuclear control panel theme
 }
 
 void Slider::AutoConfigureLayout() {
@@ -62,9 +62,10 @@ void Slider::AutoConfigureLayout() {
 }
 
 void Slider::SetTheme(Color primary_color) {
-	track_color_ = Fade(primary_color, 0.3f);
-	handle_color_ = primary_color;
-	active_color_ = ColorBrightness(primary_color, 0.2f);
+    // Vintage nuclear control panel theme
+    track_color_ = kVintageBeige;
+    handle_color_ = kVintageYellow;
+    active_color_ = kVintageOrange;
 	text_color_ = kDefaultTextColor;
 }
 

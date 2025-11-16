@@ -4,8 +4,8 @@
 CanvasManager::CanvasManager(ReactorManager *reactorManager)
 	: reactorManager_(reactorManager),
 	  tempDial(0, 0, 200, 200, 0, 1000, 350, "TEMP °C"),
-	  rpmDial(400, 0, 200, 200, 0, 1000, 350, "RPM"),
-	  pressureDial(400, 0, 200, 200, 0, 60, 40, "Pressure Kpa") {
+	  rpmDial(300, 0, 200, 200, 0, 1000, 350, "RPM"),
+	  pressureDial(600, 0, 200, 200, 0, 60, 40, "Pressure Kpa") {
 	CreateSlider();
 }
 
