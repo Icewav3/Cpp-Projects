@@ -40,6 +40,6 @@ void CanvasManager::Update(float deltaTime) {
 	}
 
 	if (reactorManager_ && coolantSlider) {
-		reactorManager_->Update(deltaTime, coolantSlider->GetCurrentValue());
+		reactorManager_->Update(deltaTime, coolantSlider->GetValue());
 	}
 }

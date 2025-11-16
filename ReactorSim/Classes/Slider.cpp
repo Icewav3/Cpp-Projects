@@ -1,253 +1,196 @@
 ﻿#include "Slider.h"
+#include <cmath>
 
-Slider::Slider(
-	float xpos,
-	float ypos,
-	float length,
-	float height,
-	float minValue,
-	float maxValue,
-	float initialValue,
-	const std::string &label,
-	float handleSize,
-	float trackThickness,
-	bool showMinMaxLabels,
-	Color trackColor,
-	Color handleColor,
-	Color textColor)
-	: Instrument(xpos, ypos, length, height),
-	  minValue_(minValue),
-	  maxValue_(maxValue),
-	  currentValue_(std::clamp(initialValue, minValue, maxValue)),
+Slider::Slider(float x, float y, float width, float height,
+               float min_value, float max_value, float initial_value,
+               const std::string &label)
+	: Instrument(x, y, width, height),
+	  min_value_(min_value),
+	  max_value_(max_value),
+	  current_value_(std::clamp(initial_value, min_value, max_value)),
 	  label_(label),
-	  showMinMaxLabels_(showMinMaxLabels),
-	  handleSize_(handleSize),
-	  trackThickness_(trackThickness),
-	  trackColor_(trackColor),
-	  handleColor_(handleColor),
-	  textColor_(textColor),
-	  isDragging_(false),
-	  isHovered_(false),
-	  dragOffset_({0, 0}) {
-	// Determine orientation based on dimensions
-	isHorizontal_ = length_ > height_;
+	  is_dragging_(false),
+	  is_hovered_(false) {
+	AutoConfigureLayout();
+	SetTheme(BLUE); // Default theme
 }
 
-void Slider::Update(float DeltaTime) {
-	if (!IsBroken) {
+void Slider::AutoConfigureLayout() {
+	// Determine orientation based on aspect ratio
+	is_horizontal_ = size_.x > size_.y;
+
+	// Auto-scale dimensions based on size
+	float min_dimension = std::min(size_.x, size_.y);
+
+	// Auto-configure track and handle sizes
+	if (is_horizontal_) {
+		track_thickness_ = std::max(4.0f, min_dimension * 0.2f);
+		handle_size_ = std::max(12.0f, min_dimension * 0.8f);
+	} else {
+		track_thickness_ = std::max(4.0f, min_dimension * 0.2f);
+		handle_size_ = std::max(12.0f, min_dimension * 0.8f);
+	}
+
+	// Auto-calculate spacing
+	label_spacing_ = kDefaultPadding;
+	value_spacing_ = kDefaultPadding;
+
+	// Configure track rectangle
+	if (is_horizontal_) {
+		float track_y = position_.y + (size_.y - track_thickness_) * 0.5f;
+		track_rect_ = {position_.x, track_y, size_.x, track_thickness_};
+	} else {
+		float track_x = position_.x + (size_.x - track_thickness_) * 0.5f;
+		track_rect_ = {track_x, position_.y, track_thickness_, size_.y};
+	}
+
+	// Auto-position label
+	if (!label_.empty()) {
+		int text_width = MeasureText(label_.c_str(), kDefaultFontSize);
+		if (is_horizontal_) {
+			label_position_ = {
+				position_.x + (size_.x - text_width) * 0.5f,
+				position_.y - kDefaultFontSize - label_spacing_
+			};
+		} else {
+			label_position_ = {
+				position_.x + (size_.x - text_width) * 0.5f,
+				position_.y - kDefaultFontSize - label_spacing_
+			};
+		}
+	}
+}
+
+void Slider::SetTheme(Color primary_color) {
+	track_color_ = Fade(primary_color, 0.3f);
+	handle_color_ = primary_color;
+	active_color_ = ColorBrightness(primary_color, 0.2f);
+	text_color_ = kDefaultTextColor;
+}
+
+void Slider::Update(float delta_time) {
+	if (!is_broken_) {
 		HandleInput();
 	}
 	Draw();
 }
 
 void Slider::HandleInput() {
-	Vector2 mousePos = GetMousePosition();
-	Rectangle handleBounds = GetHandleBounds();
+	Vector2 mouse_pos = GetMousePosition();
+	Rectangle handle_bounds = GetHandleBounds();
 
-	// Check if mouse is over handle
-	isHovered_ = CheckCollisionPointRec(mousePos, handleBounds);
+	// Check hover state
+	is_hovered_ = CheckCollisionPointRec(mouse_pos, handle_bounds);
 
-	// Start dragging
-	if (isHovered_ && IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
-		isDragging_ = true;
-		Vector2 handleCenter = GetHandlePosition();
-		dragOffset_ = {mousePos.x - handleCenter.x, mousePos.y - handleCenter.y};
+	// Handle mouse interaction
+	if (is_hovered_ && IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
+		is_dragging_ = true;
 	}
 
-	// Stop dragging
 	if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON)) {
-		isDragging_ = false;
+		is_dragging_ = false;
 	}
 
-	// Handle dragging
-	if (isDragging_) {
-		float newValue = CalculateValueFromPosition(mousePos);
-		currentValue_ = std::clamp(newValue, minValue_, maxValue_);
+	// Update value while dragging
+	if (is_dragging_) {
+		float new_value = CalculateValueFromMouse(mouse_pos);
+		SetValue(new_value);
 	}
 }
 
 void Slider::Draw() {
-	Rectangle trackBounds = GetTrackBounds();
-	Rectangle handleBounds = GetHandleBounds();
-
 	// Draw track
-	DrawRectangleRec(trackBounds, trackColor_);
-	DrawRectangleLinesEx(trackBounds, 1.0f, BLACK);
+	DrawRectangleRounded(track_rect_, 0.5f, 8, track_color_);
+	DrawRectangleRoundedLines(track_rect_, 0.5f, 8, kDefaultBorderColor);
 
-	// Draw handle
-	Color handleDrawColor = isDragging_ ? YELLOW : (isHovered_ ? LIGHTGRAY : handleColor_);
-	DrawRectangleRec(handleBounds, handleDrawColor);
-	DrawRectangleLinesEx(handleBounds, 2.0f, BLACK);
+	// Draw handle with smooth color transitions
+	Rectangle handle_bounds = GetHandleBounds();
+	Color handle_draw_color = is_dragging_
+		                          ? active_color_
+		                          : (is_hovered_ ? ColorBrightness(handle_color_, 0.1f) : handle_color_);
 
-	// Draw label if provided
+	DrawRectangleRounded(handle_bounds, 0.3f, 8, handle_draw_color);
+	DrawRectangleRoundedLines(handle_bounds, 0.3f, 8, kDefaultBorderColor);
+
+	// Draw label if present
 	if (!label_.empty()) {
-		const char *labelText = label_.c_str();
-		int textWidth = MeasureText(labelText, fontSize_);
-
-		if (isHorizontal_) {
-			// Label above horizontal slider
-			DrawText(labelText,
-			         xpos_ + (length_ - textWidth) / 2,
-			         ypos_ - fontSize_ - labelSpacing_,
-			         fontSize_, textColor_);
-		} else {
-			// Label above vertical slider
-			DrawText(labelText,
-			         xpos_ + (height_ - textWidth) / 2,
-			         ypos_ - fontSize_ - labelSpacing_,
-			         fontSize_, textColor_);
-		}
+		DrawText(label_.c_str(),
+		         (int) label_position_.x, (int) label_position_.y,
+		         kDefaultFontSize, text_color_);
 	}
 
-	// Draw min/max labels if enabled
-	if (showMinMaxLabels_) {
-		char minText[32], maxText[32];
-		snprintf(minText, sizeof(minText), "%.1f", minValue_);
-		snprintf(maxText, sizeof(maxText), "%.1f", maxValue_);
+	// Auto-draw current value
+	char value_text[32];
+	snprintf(value_text, sizeof(value_text), "%.1f", current_value_);
+	int value_width = MeasureText(value_text, kDefaultFontSize - 2);
 
-		if (isHorizontal_) {
-			// Min on left, max on right
-			DrawText(minText, xpos_ - MeasureText(minText, fontSize_) - minMaxSpacing_,
-			         ypos_ + (height_ - fontSize_) / 2, fontSize_, textColor_);
-			DrawText(maxText, xpos_ + length_ + minMaxSpacing_,
-			         ypos_ + (height_ - fontSize_) / 2, fontSize_, textColor_);
-		} else {
-			// Min at bottom, max at top
-			int minWidth = MeasureText(minText, fontSize_);
-			int maxWidth = MeasureText(maxText, fontSize_);
-			DrawText(maxText, xpos_ + (height_ - maxWidth) / 2,
-			         ypos_ - fontSize_ - minMaxSpacing_, fontSize_, textColor_);
-			DrawText(minText, xpos_ + (height_ - minWidth) / 2,
-			         ypos_ + length_ + minMaxSpacing_, fontSize_, textColor_);
-		}
-	}
+	Vector2 handle_pos = GetHandlePosition();
+	Vector2 value_pos;
 
-	// Draw current value near handle
-	char valueText[32];
-	snprintf(valueText, sizeof(valueText), "%.1f", currentValue_);
-	int valueWidth = MeasureText(valueText, fontSize_);
-
-	Vector2 handlePos = GetHandlePosition();
-	if (isHorizontal_) {
-		DrawText(valueText, handlePos.x - valueWidth / 2,
-		         ypos_ + height_ + minMaxSpacing_, fontSize_, textColor_);
+	if (is_horizontal_) {
+		value_pos = {
+			handle_pos.x - value_width * 0.5f,
+			position_.y + size_.y + value_spacing_
+		};
 	} else {
-		DrawText(valueText, xpos_ + height_ + minMaxSpacing_,
-		         handlePos.y - fontSize_ / 2, fontSize_, textColor_);
+		value_pos = {
+			position_.x + size_.x + value_spacing_,
+			handle_pos.y - (kDefaultFontSize - 2) * 0.5f
+		};
 	}
+
+	DrawText(value_text, (int) value_pos.x, (int) value_pos.y,
+	         kDefaultFontSize - 2, text_color_);
 }
 
-Rectangle Slider::GetTrackBounds() const {
-	if (isHorizontal_) {
-		float trackY = ypos_ + (height_ - trackThickness_) / 2;
-		return {xpos_, trackY, length_, trackThickness_};
+Vector2 Slider::GetHandlePosition() const {
+	float normalized_value = (current_value_ - min_value_) / (max_value_ - min_value_);
+	normalized_value = std::clamp(normalized_value, 0.0f, 1.0f);
+
+	if (is_horizontal_) {
+		float handle_x = position_.x + normalized_value * size_.x;
+		return {handle_x, position_.y + size_.y * 0.5f};
 	} else {
-		float trackX = xpos_ + (height_ - trackThickness_) / 2;
-		return {trackX, ypos_, trackThickness_, length_};
+		float handle_y = position_.y + size_.y - (normalized_value * size_.y);
+		return {position_.x + size_.x * 0.5f, handle_y};
 	}
 }
 
 Rectangle Slider::GetHandleBounds() const {
-	Vector2 handlePos = GetHandlePosition();
+	Vector2 handle_pos = GetHandlePosition();
+	return {
+		handle_pos.x - handle_size_ * 0.5f,
+		handle_pos.y - handle_size_ * 0.5f,
+		handle_size_,
+		handle_size_
+	};
+}
 
-	if (isHorizontal_) {
-		return {
-			handlePos.x - handleSize_ / 2,
-			handlePos.y - handleSize_ / 2,
-			handleSize_,
-			handleSize_
-		};
+Rectangle Slider::GetTrackBounds() const {
+	return track_rect_;
+}
+
+float Slider::CalculateValueFromMouse(Vector2 mouse_pos) const {
+	float normalized_pos;
+
+	if (is_horizontal_) {
+		float relative_x = mouse_pos.x - position_.x;
+		normalized_pos = relative_x / size_.x;
 	} else {
-		return {
-			handlePos.x - handleSize_ / 2,
-			handlePos.y - handleSize_ / 2,
-			handleSize_,
-			handleSize_
-		};
+		float relative_y = mouse_pos.y - position_.y;
+		normalized_pos = 1.0f - (relative_y / size_.y); // Inverted for intuitive control
 	}
+
+	normalized_pos = std::clamp(normalized_pos, 0.0f, 1.0f);
+	return min_value_ + normalized_pos * (max_value_ - min_value_);
 }
 
-Vector2 Slider::GetHandlePosition() const {
-	float position = MapValueToPosition(currentValue_);
-
-	if (isHorizontal_) {
-		return {xpos_ + position, ypos_ + height_ / 2};
-	} else {
-		// Vertical: position from bottom to top (inverted for intuitive control)
-		return {xpos_ + height_ / 2, ypos_ + length_ - position};
-	}
-}
-
-float Slider::MapValueToPosition(float value) const {
-	float normalizedValue = (value - minValue_) / (maxValue_ - minValue_);
-	normalizedValue = std::clamp(normalizedValue, 0.0f, 1.0f);
-
-	if (isHorizontal_) {
-		return normalizedValue * length_;
-	} else {
-		return normalizedValue * length_;
-	}
-}
-
-float Slider::MapPositionToValue(float position) const {
-	float normalizedPosition = position / (isHorizontal_ ? length_ : length_);
-	normalizedPosition = std::clamp(normalizedPosition, 0.0f, 1.0f);
-	return minValue_ + normalizedPosition * (maxValue_ - minValue_);
-}
-
-float Slider::CalculateValueFromPosition(Vector2 mousePos) const {
-	if (isHorizontal_) {
-		float relativePos = mousePos.x - xpos_;
-		return MapPositionToValue(relativePos);
-	} else {
-		// Vertical: inverted so dragging up increases value
-		float relativePos = (ypos_ + length_) - mousePos.y;
-		return MapPositionToValue(relativePos);
-	}
-}
-
-bool Slider::IsPointOnHandle(Vector2 point) const {
-	return CheckCollisionPointRec(point, GetHandleBounds());
-}
-
-// Setters
 void Slider::SetValue(float value) {
-	currentValue_ = std::clamp(value, minValue_, maxValue_);
+	current_value_ = std::clamp(value, min_value_, max_value_);
 }
 
-void Slider::SetMinMaxValues(float min, float max) {
-	minValue_ = min;
-	maxValue_ = max;
-	currentValue_ = std::clamp(currentValue_, minValue_, maxValue_);
-}
-
-void Slider::SetLabel(const std::string &label) {
-	label_ = label;
-}
-
-void Slider::SetColors(Color track, Color handle, Color text) {
-	trackColor_ = track;
-	handleColor_ = handle;
-	textColor_ = text;
-}
-
-// Getters
-float Slider::GetCurrentValue() const {
-	return currentValue_;
-}
-
-float Slider::GetMinValue() const {
-	return minValue_;
-}
-
-float Slider::GetMaxValue() const {
-	return maxValue_;
-}
-
-bool Slider::IsHorizontal() const {
-	return isHorizontal_;
-}
-
-bool Slider::IsBeingDragged() const {
-	return isDragging_;
+void Slider::SetRange(float min_val, float max_val) {
+	min_value_ = min_val;
+	max_value_ = max_val;
+    current_value_ = std::clamp(current_value_, min_value_, max_value_);
 }

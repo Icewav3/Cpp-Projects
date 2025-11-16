@@ -38,7 +38,7 @@ private:
 	const float dialStartAngle = 225.0f; // Bottom-left
 	const float dialEndAngle = -45.0f; // Bottom-right
 
-	// Broken dial behavior
+	// Broken dial behavior todo
 	float brokenTarget;
 	const float brokenChangeInterval = 0.3f;
 };

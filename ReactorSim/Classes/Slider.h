@@ -3,57 +3,36 @@
 
 #include "Instrument.h"
 #include <algorithm>
-#include <cmath>
-#include <raylib.h>
 #include <string>
 
 class Slider : public Instrument {
 public:
-	Slider(
-		float xpos,
-		float ypos,
-		float length,
-		float height,
-		float minValue,
-		float maxValue,
-		float initialValue = 0.0f,
-		const std::string &label = "",
-		float handleSize = 12.0f,
-		float trackThickness = 6.0f,
-		bool showMinMaxLabels = true,
-		Color trackColor = GRAY,
-		Color handleColor = WHITE,
-		Color textColor = BLACK);
+	// Simplified constructor - auto-configures everything based on dimensions
+	Slider(float x, float y, float width, float height,
+	       float min_value = 0.0f, float max_value = 100.0f,
+	       float initial_value = 0.0f, const std::string &label = "");
 
-	void Update(float DeltaTime) override;
+	void Update(float delta_time) override;
+
+	// Simple getters/setters
+	float GetValue() const { return current_value_; }
 
 	void SetValue(float value);
 
-	void SetMinMaxValues(float min, float max);
+	void SetRange(float min_val, float max_val);
 
-	void SetLabel(const std::string &label);
+	void SetLabel(const std::string &label) { label_ = label; }
 
-	void SetColors(Color track, Color handle, Color text);
+	// Auto-styling based on size
+	void SetTheme(Color primary_color);
 
-	float GetCurrentValue() const;
-
-	float GetMinValue() const;
-
-	float GetMaxValue() const;
-
-	bool IsHorizontal() const;
-
-	bool IsBeingDragged() const;
-
-private:
+protected:
 	void Draw() override;
 
-	// Input handling
+private:
 	void HandleInput();
 
-	bool IsPointOnHandle(Vector2 point) const;
-
-	float CalculateValueFromPosition(Vector2 mousePos) const;
+	void AutoConfigureLayout();
 
 	Vector2 GetHandlePosition() const;
 
@@ -61,38 +40,34 @@ private:
 
 	Rectangle GetHandleBounds() const;
 
-	// Value mapping
-	float MapValueToPosition(float value) const;
+	float CalculateValueFromMouse(Vector2 mouse_pos) const;
 
-	float MapPositionToValue(float position) const;
-
-	// Member variables
-	float minValue_;
-	float maxValue_;
-	float currentValue_;
-
+	// Core values
+	float min_value_;
+	float max_value_;
+	float current_value_;
 	std::string label_;
-	bool showMinMaxLabels_;
 
-	// Visual configuration
-	float handleSize_;
-	float trackThickness_;
-	Color trackColor_;
-	Color handleColor_;
-	Color textColor_;
+	// Auto-configured layout
+	bool is_horizontal_;
+	float track_thickness_;
+	float handle_size_;
+	Rectangle track_rect_;
+	Vector2 label_position_;
 
-	// Interaction state
-	bool isDragging_;
-	bool isHovered_;
-	Vector2 dragOffset_;
+	// Colors (auto-themed)
+	Color track_color_;
+	Color handle_color_;
+	Color active_color_;
+	Color text_color_;
 
-	// Cached orientation (determined from length vs width)
-	bool isHorizontal_;
+	// Input state
+	bool is_dragging_;
+	bool is_hovered_;
 
-	// Text sizing
-	const int fontSize_ = 12;
-	const float labelSpacing_ = 5.0f;
-	const float minMaxSpacing_ = 3.0f;
-	// Broken slider behavior will be implemented later
+	// Auto-calculated spacing
+	float label_spacing_;
+	float value_spacing_;
 };
+
 #endif // SLIDER_H
