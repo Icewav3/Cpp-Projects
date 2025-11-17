@@ -6,5 +6,6 @@ add_raylib_executable(ReactorSim
         main.cpp
         ${CLASS_SOURCES}
         ${CLASS_HEADERS}
-
+        RESOURCES
+        Resources
 )
