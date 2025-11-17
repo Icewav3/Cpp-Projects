@@ -36,7 +36,7 @@ void Dial::Draw() {
 
 	// Draw scale marks
 	for (int i = 0; i <= 10; i++) {
-		float angle = (i / 10.0f) * 180 - 90; // -90 to 90 degrees
+		float angle = 180 - (i / 10.0f) * 180;
 		float markRadius = radius * 0.85f;
 		float markEndRadius = radius * 0.8f;
 
@@ -51,12 +51,12 @@ void Dial::Draw() {
 	auto drawStart = Vector2(0, 0);
 	float percentage = (currentValue - minValue) / (maxValue - minValue);
 	float needleLength = radius * 0.75f;
-	auto drawEnd = drawStart + Vector2(-needleLength, 0.0f);
+	auto drawEnd = drawStart + Vector2(needleLength, 0.0f);
 
 	// Rotate matrix for needle
 	rlPushMatrix();
 	rlTranslatef(center.x, center.y, 0.0f);
-	rlRotatef(percentage * 180 - 90, 0, 0, 1); // -90 to 90 degrees
+	rlRotatef(180 + percentage * 180, 0, 0, 1); // 180 to 0 degrees (left to right)
 	DrawLineEx(drawStart, drawEnd, 4, kVintageRed);
 	rlPopMatrix();
 

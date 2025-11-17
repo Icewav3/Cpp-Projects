@@ -24,6 +24,7 @@ private:
 	Dial tempDial;
 	Dial rpmDial;
 	Dial pressureDial;
+	Dial powerOutputDial;
 
 	void CreateSlider();
 };
