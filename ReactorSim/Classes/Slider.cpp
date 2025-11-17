@@ -62,17 +62,15 @@ void Slider::AutoConfigureLayout() {
 }
 
 void Slider::SetTheme(Color primary_color) {
-    // Vintage nuclear control panel theme
-    track_color_ = kVintageBeige;
-    handle_color_ = kVintageYellow;
-    active_color_ = kVintageOrange;
+	// Vintage nuclear control panel theme
+	track_color_ = kVintageBeige;
+	handle_color_ = kVintageYellow;
+	active_color_ = kVintageOrange;
 	text_color_ = kDefaultTextColor;
 }
 
 void Slider::Update(float delta_time) {
-	if (!is_broken_) {
-		HandleInput();
-	}
+	HandleInput();
 	Draw();
 }
 
@@ -193,5 +191,5 @@ void Slider::SetValue(float value) {
 void Slider::SetRange(float min_val, float max_val) {
 	min_value_ = min_val;
 	max_value_ = max_val;
-    current_value_ = std::clamp(current_value_, min_value_, max_value_);
+	current_value_ = std::clamp(current_value_, min_value_, max_value_);
 }

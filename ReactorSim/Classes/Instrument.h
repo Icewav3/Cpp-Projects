@@ -10,8 +10,7 @@ public:
 
 	// Simplified constructor - just position and size
 	Instrument(float x, float y, float width, float height)
-		: is_broken_(false),
-		  position_{x, y},
+		: position_{x, y},
 		  size_{width, height},
 		  bounds_{x, y, width, height} {
 	}
@@ -23,7 +22,6 @@ public:
 	Vector2 GetPosition() const { return position_; }
 	Vector2 GetSize() const { return size_; }
 	Rectangle GetBounds() const { return bounds_; }
-	bool IsBroken() const { return is_broken_; }
 
 	// Setters
 	void SetPosition(float x, float y) {
@@ -32,12 +30,9 @@ public:
 		bounds_.y = y;
 	}
 
-	void SetBroken(bool broken) { is_broken_ = broken; }
-
 protected:
 	virtual void Draw() = 0;
 
-	bool is_broken_;
 	Vector2 position_;
 	Vector2 size_;
 	Rectangle bounds_;
