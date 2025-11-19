@@ -35,7 +35,7 @@ float Coolant::GetCoolantTempOut() {
 
 // calculates the amount of heat units to remove and add from reactor to turbine
 float Coolant::calculateThermalTransfer(float deltaTime) {
-	ThermalTransfer = FlowRate * HeatCapacity * deltaTime;
+	return ThermalTransfer = FlowRate * HeatCapacity * deltaTime;
 }
 
 //TODO subtract this heat from reactor and move to turbine

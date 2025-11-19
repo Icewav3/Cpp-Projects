@@ -37,6 +37,11 @@ CanvasManager::~CanvasManager() {
 	delete controlRodSlider;
 }
 
+void CanvasManager::Update(float deltaTime) {
+	UpdateValues(deltaTime);
+	UpdateUI(deltaTime);
+}
+
 void CanvasManager::SetReactorManager(ReactorManager *reactorManager) {
 	reactorManager_ = reactorManager;
 }

@@ -21,7 +21,7 @@ int main() {
 
 	while (!WindowShouldClose()) {
 		float deltaTime = GetFrameTime();
-		canvasManager.UpdateValues(deltaTime);
+		canvasManager.Update(deltaTime);
 		BeginDrawing();
 
 		ClearBackground(RAYWHITE);
