@@ -10,17 +10,19 @@ CanvasManager::CanvasManager(ReactorManager *reactorManager)
 	  rpmDial(300, 0, 200, 200, 0, 1000, 350, "RPM"),
 	  pressureDial(600, 0, 200, 200, 0, 60, 40, "Pressure Kpa"),
 	  powerOutputDial(900, 0, 200, 200, 0, 1000, 750, "Power Output Mw") {
-	CreateSlider();
-}
-
-CanvasManager::~CanvasManager() {
-	delete coolantSlider;
-}
-
-void CanvasManager::CreateSlider() {
 	coolantSlider = new Slider(
+		GetScreenWidth() * 0.1f - 100,
+		GetScreenHeight() * 0.6f,
+		20,
+		200,
+		0.0f,
+		100.0f,
+		50.0f,
+		"Control Rods"
+	);
+	controlRodSlider = new Slider(
 		GetScreenWidth() * 0.5f - 100,
-		GetScreenHeight() * 0.8f,
+		GetScreenHeight() * 0.6f,
 		20,
 		200,
 		0.0f,
@@ -30,24 +32,31 @@ void CanvasManager::CreateSlider() {
 	);
 }
 
+CanvasManager::~CanvasManager() {
+	delete coolantSlider;
+	delete controlRodSlider;
+}
+
 void CanvasManager::SetReactorManager(ReactorManager *reactorManager) {
 	reactorManager_ = reactorManager;
 }
 
-void CanvasManager::Update(float deltaTime) {
+void CanvasManager::UpdateValues(float deltaTime) {
+	//UI Elements
+	if (reactorManager_ && coolantSlider) {
+		coolantSlider->Update(deltaTime);
+		reactorManager_->SetCoolantValve(coolantSlider->GetValue());
+	}
+	if (reactorManager_ && controlRodSlider) {
+		controlRodSlider->Update(deltaTime);
+		reactorManager_->SetControlRodPosition(controlRodSlider->GetValue());
+	}
+	reactorManager_->Update(deltaTime);
+}
+
+void CanvasManager::UpdateUI(float deltaTime) {
 	tempDial.Update(deltaTime);
 	rpmDial.Update(deltaTime);
 	pressureDial.Update(deltaTime);
 	powerOutputDial.Update(deltaTime);
-	static float accumulated = 0.0f;
-	accumulated += 1;
-	powerOutputDial.SetTargetValue(std::fmod(accumulated, 1000.0f));
-
-	if (coolantSlider) {
-		coolantSlider->Update(deltaTime);
-	}
-
-	if (reactorManager_ && coolantSlider) {
-		reactorManager_->Update(deltaTime, coolantSlider->GetValue());
-	}
 }

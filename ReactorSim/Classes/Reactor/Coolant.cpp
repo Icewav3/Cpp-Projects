@@ -1,7 +1,8 @@
 ﻿#include "Coolant.h"
 
-Coolant::Coolant(float maxFlow)
+Coolant::Coolant(float maxFlow, float heatCapacity)
 	: MaxFlow(maxFlow),
+	  HeatCapacity(heatCapacity),
 	  FlowRate(0.0f),
 	  TempIn(0.0f),
 	  TempOut(0.0f),
@@ -9,15 +10,19 @@ Coolant::Coolant(float maxFlow)
 }
 
 void Coolant::Update(float DeltaTime) {
-	//TODO: Update coolant temperature and flow calculations
+	calculateThermalTransfer(DeltaTime);
 }
 
 void Coolant::UpdateCoolantValve(float Input) {
-	//TODO: Update valve position and adjust flow rate
+	FlowRate = Input * MaxFlow;
 }
 
 float Coolant::GetCoolantThermalTransfer() {
-	//todo
+	return ThermalTransfer;
+}
+
+float Coolant::GetCoolantFlowRate() {
+	return FlowRate;
 }
 
 float Coolant::GetCoolantTempIn() {
@@ -28,10 +33,9 @@ float Coolant::GetCoolantTempOut() {
 	return TempOut;
 }
 
-float Coolant::GetCoolantFlowRate() {
-	return FlowRate;
+// calculates the amount of heat units to remove and add from reactor to turbine
+float Coolant::calculateThermalTransfer(float deltaTime) {
+	ThermalTransfer = FlowRate * HeatCapacity * deltaTime;
 }
 
-float Coolant::calculateThermalTransfer() {
-	ThermalTransfer = 0;
-}
+//TODO subtract this heat from reactor and move to turbine

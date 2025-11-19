@@ -4,7 +4,7 @@
 
 class Coolant {
 public:
-	explicit Coolant(float maxFlow);
+	explicit Coolant(float maxFlow, float heatCapacity);
 
 	void Update(float DeltaTime);
 
@@ -20,12 +20,13 @@ public:
 
 private:
 	float MaxFlow;
+	float HeatCapacity;
 	float FlowRate;
 	float TempIn;
 	float TempOut;
 	float ThermalTransfer;
 
-	float calculateThermalTransfer();
+	float calculateThermalTransfer(float deltaTime);
 };
 
 

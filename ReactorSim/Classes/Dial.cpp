@@ -21,6 +21,7 @@ Dial::Dial(
 }
 
 void Dial::Update(float DeltaTime) {
+	//hard to remove this, whatever it stays
 	Draw();
 }
 

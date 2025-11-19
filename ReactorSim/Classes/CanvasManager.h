@@ -13,18 +13,22 @@ public:
 
 	~CanvasManager();
 
-	void Update(float deltaTime);
+	void UpdateValues(float deltaTime);
+
+	void UpdateUI(float deltaTime);
 
 	void SetReactorManager(ReactorManager *reactorManager);
 
 private:
 	Slider *coolantSlider;
+	Slider *controlRodSlider;
 	ReactorManager *reactorManager_;
 
 	Dial tempDial;
 	Dial rpmDial;
 	Dial pressureDial;
 	Dial powerOutputDial;
+
 
 	void CreateSlider();
 };

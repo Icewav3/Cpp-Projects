@@ -3,32 +3,29 @@
 
 
 //todo add constsants to the constructor to allow for different reactor params, ensure defualt values for constructor for an idle state
-Reactor::Reactor(float controlRodPosition, float temp, float pressure, float heatOutput)
+Reactor::Reactor(float controlRodPosition, float maxTemp, float maxPressure, float maxHeatOutput)
 	: ControlRodPosition(controlRodPosition)
-	  , Temp(temp)
-	  , Pressure(pressure)
-	  , HeatOutput(heatOutput) {
+	  , Temp(maxTemp)
+	  , Pressure(maxPressure)
+	  , MaxHeatOutput(maxHeatOutput) {
 }
 
-float maxTemp = 1000;
+float currentTemp = 0;
+float currentPressure = 0;
+float currentHeatDelta = 0;
 
 void Reactor::Update(float DeltaTime) {
+	currentTemp += currentHeatDelta * DeltaTime;
 }
 
 void Reactor::UpdateControlRodPosition(float Position) {
-	HeatOutput = std::abs(1 - Position) * maxTemp;
+	HeatOutput = std::abs(1 - Position) * HeatOutput;
 }
 
 float Reactor::GetPressure() {
-	//TODO: Return current reactor pressure
 	return Pressure;
 }
 
 float Reactor::GetTemp() {
 	return Temp;
-}
-
-float Reactor::GetHeatOutput() {
-	//TODO: Calculate and return steam output
-	return HeatOutput;
 }

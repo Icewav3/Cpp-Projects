@@ -10,13 +10,15 @@ private:
 	Reactor *reactor;
 	Turbine *turbine;
 	Coolant *coolant;
+	float CurrentControlRodPosition;
+	float CurrentCoolantValuePosition;
 
 public:
 	ReactorManager();
 
 	~ReactorManager();
 
-	void Update(float DeltaTime, float userInput = 0.0f);
+	void Update(float DeltaTime);
 
 	// Accessors for UI
 	float GetReactorTemp() const;
@@ -26,6 +28,12 @@ public:
 	float GetTurbineRPM() const;
 
 	float GetTurbinePowerOut() const;
+
+	//input methods
+
+	void SetControlRodPosition(float Position);
+
+	void SetCoolantValve(float Position);
 };
 
 #endif //CPP_PROJECTS_REACTORMANAGER_H
