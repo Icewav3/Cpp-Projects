@@ -6,7 +6,7 @@
 #include "Classes/Reactor/ReactorManager.h"
 
 int main() {
-	// Initialize the window TODO may need to refactor for web iframes
+	// Initialize the window
 	const int screenWidth = GetMonitorWidth(0);
 	const int screenHeight = GetMonitorHeight(0);
 
@@ -21,12 +21,12 @@ int main() {
 
 	while (!WindowShouldClose()) {
 		float deltaTime = GetFrameTime();
-		canvasManager.Update(deltaTime);
-		BeginDrawing();
 
+		BeginDrawing();
 		ClearBackground(RAYWHITE);
 
-		DrawText("Hello, world!", 190, 200, 20, LIGHTGRAY);
+		// Update and draw everything
+		canvasManager.Update(deltaTime);
 
 		EndDrawing();
 	}

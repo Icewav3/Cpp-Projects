@@ -1,7 +1,7 @@
 ﻿#include "ReactorManager.h"
 
 ReactorManager::ReactorManager()
-	: reactor(new Reactor(1000.0f, 20.0f, 5000.0f))
+	: reactor(new Reactor(1000.0f, 60.0f, 5000.0f))
 	  , turbine(new Turbine(3000, 10000, 2.0f))
 	  , coolant(new Coolant(100.0f, 0.1f))
 	  , TotalRevenue(0.0f)
