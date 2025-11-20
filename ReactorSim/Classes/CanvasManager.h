@@ -4,29 +4,45 @@
 #include <raylib.h>
 #include "Dial.h"
 #include "Slider.h"
+#include "GameManager.h"
 
 class ReactorManager;
 
 class CanvasManager {
 public:
-	CanvasManager(ReactorManager *reactorManager = nullptr);
+	CanvasManager();
 
 	~CanvasManager();
 
-	void Update(float deltaTime);
+	void RenderMainMenu();
 
-	void SetReactorManager(ReactorManager *reactorManager);
+	void RenderIntroSequence();
+
+	void RenderPlayMode(ReactorManager *reactorManager, GameManager *gameManager, float deltaTime);
+
+	void RenderEndScreen(const GameStatistics &stats);
 
 private:
+	// Play mode UI elements
+	void UpdatePlayModeControls(ReactorManager *reactorManager, float deltaTime);
+
+	void DrawPlayModeUI(float deltaTime);
+
+	void DrawRevenue(float revenue);
+
+	void DrawTimer(GameManager *gameManager);
+
+	// UI Components
 	Slider *coolantSlider;
-	ReactorManager *reactorManager_;
+	Slider *controlRodSlider;
 
 	Dial tempDial;
 	Dial rpmDial;
 	Dial pressureDial;
 	Dial powerOutputDial;
 
-	void CreateSlider();
+	Font sevenSegmentFont;
+	bool fontLoaded;
 };
 
 #endif

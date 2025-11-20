@@ -4,9 +4,9 @@
 
 class Coolant {
 public:
-	explicit Coolant(float maxFlow);
+	explicit Coolant(float maxFlow, float heatCapacity);
 
-	void Update(float DeltaTime);
+	void Update(float DeltaTime, float reactorTemp);
 
 	void UpdateCoolantValve(float Input);
 
@@ -18,14 +18,18 @@ public:
 
 	float GetCoolantTempOut();
 
+	float GetHeatExtracted() const;
+
 private:
 	float MaxFlow;
+	float HeatCapacity;
 	float FlowRate;
 	float TempIn;
 	float TempOut;
 	float ThermalTransfer;
+	float HeatExtracted; // Heat removed from reactor
 
-	float calculateThermalTransfer();
+	void calculateThermalTransfer(float deltaTime, float reactorTemp);
 };
 
 

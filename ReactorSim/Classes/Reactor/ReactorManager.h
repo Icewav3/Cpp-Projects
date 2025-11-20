@@ -10,22 +10,40 @@ private:
 	Reactor *reactor;
 	Turbine *turbine;
 	Coolant *coolant;
+	float CurrentControlRodPosition;
+	float CurrentCoolantValuePosition;
+	float TotalRevenue;
+	float RevenueRate;
 
 public:
 	ReactorManager();
 
 	~ReactorManager();
 
-	void Update(float DeltaTime, float userInput = 0.0f);
+	void Update(float DeltaTime);
 
 	// Accessors for UI
 	float GetReactorTemp() const;
+
+	float GetReactorPressure() const;
 
 	float GetCoolantTemp() const;
 
 	float GetTurbineRPM() const;
 
 	float GetTurbinePowerOut() const;
+
+	float GetRevenue() const;
+
+	bool IsMeltdown() const;
+
+	bool IsKaboom() const;
+
+	//input methods
+
+	void SetControlRodPosition(float Position);
+
+	void SetCoolantValve(float Position);
 };
 
 #endif //CPP_PROJECTS_REACTORMANAGER_H

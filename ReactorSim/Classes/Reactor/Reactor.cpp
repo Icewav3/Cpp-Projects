@@ -1,34 +1,81 @@
 ﻿#include "Reactor.h"
+
+#include <algorithm>
 #include <cstdlib>
 
 
-//todo add constsants to the constructor to allow for different reactor params, ensure defualt values for constructor for an idle state
-Reactor::Reactor(float controlRodPosition, float temp, float pressure, float heatOutput)
-	: ControlRodPosition(controlRodPosition)
-	  , Temp(temp)
-	  , Pressure(pressure)
-	  , HeatOutput(heatOutput) {
+Reactor::Reactor(float maxTemp, float maxPressure, float maxHeatOutput)
+	: MaxTemp(maxTemp)
+	  , MaxPressure(maxPressure)
+	  , MaxHeatOutput(maxHeatOutput)
+	  , ControlRodPosition(1.0f)
+	  , TargetControlRodPosition(1.0f)
+	  , HeatOutput(0.1f)
+	  , currentTemp(20.0f)
+	  , currentPressure(1.0f)
+	  , currentHeatDelta(0.0f)
+	  , meltdown(false)
+	  , kaboom(false) {
 }
 
-float maxTemp = 1000;
-
 void Reactor::Update(float DeltaTime) {
+	// control rod lag
+
+	float rodSpeed = 0.25f; //magic number prolly move me
+	float positionDifference = TargetControlRodPosition - ControlRodPosition;
+	ControlRodPosition += positionDifference * rodSpeed * DeltaTime;
+	// RUNAWAY REACTION BABY >:)
+	float reactivity = 0.7f - ControlRodPosition;
+	float changeInHeat = HeatOutput * reactivity * 2.0f * DeltaTime;
+
+	HeatOutput += changeInHeat;
+
+	if (HeatOutput < 0.1f) {
+		HeatOutput = 0.1f;
+	}
+	if (HeatOutput > MaxHeatOutput) {
+		HeatOutput = MaxHeatOutput;
+	}
+	// heat calc - adds heat from fission
+	currentTemp += HeatOutput * DeltaTime;
+	// basic pressure calc
+	currentPressure = 1.0f + (currentTemp - 20.0f) * 0.1f;
+	if (currentTemp > MaxTemp) {
+		meltdown = true;
+	}
+	if (currentPressure > MaxPressure) {
+		kaboom = true;
+	}
 }
 
 void Reactor::UpdateControlRodPosition(float Position) {
-	HeatOutput = std::abs(1 - Position) * maxTemp;
+	TargetControlRodPosition = Position;
 }
 
 float Reactor::GetPressure() {
-	//TODO: Return current reactor pressure
-	return Pressure;
+	return currentPressure;
 }
 
 float Reactor::GetTemp() {
-	return Temp;
+	return currentTemp;
 }
 
-float Reactor::GetHeatOutput() {
-	//TODO: Calculate and return steam output
+float Reactor::GetHeatOutput() const {
 	return HeatOutput;
+}
+
+void Reactor::RemoveHeat(float heatAmount) {
+	// Coolant removes heat from reactor
+	currentTemp -= heatAmount;
+	if (currentTemp < 20.0f) {
+		currentTemp = 20.0f; // Minimum ambient temp
+	}
+}
+
+bool Reactor::IsMeltdown() const {
+	return meltdown;
+}
+
+bool Reactor::IsKaboom() const {
+	return kaboom;
 }

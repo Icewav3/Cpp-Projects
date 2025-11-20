@@ -19,7 +19,7 @@ public:
 
 	void Update(float DeltaTime) override;
 
-	void SetTargetValue(float value);
+	void SetValue(float value);
 
 	void SetLabel(const std::string &label);
 
