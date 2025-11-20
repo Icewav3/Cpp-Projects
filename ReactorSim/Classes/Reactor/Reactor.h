@@ -23,6 +23,7 @@ public:
 
 private:
 	float ControlRodPosition;
+	float TargetControlRodPosition;
 	float MaxHeatOutput;
 	float MaxTemp;
 	float MaxPressure;

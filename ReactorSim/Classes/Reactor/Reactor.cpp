@@ -1,4 +1,6 @@
 ﻿#include "Reactor.h"
+
+#include <algorithm>
 #include <cstdlib>
 
 
@@ -7,7 +9,8 @@ Reactor::Reactor(float maxTemp, float maxPressure, float maxHeatOutput)
 	  , MaxPressure(maxPressure)
 	  , MaxHeatOutput(maxHeatOutput)
 	  , ControlRodPosition(1.0f)
-	  , HeatOutput(0.0f)
+	  , TargetControlRodPosition(1.0f)
+	  , HeatOutput(0.1f)
 	  , currentTemp(20.0f)
 	  , currentPressure(1.0f)
 	  , currentHeatDelta(0.0f)
@@ -16,13 +19,27 @@ Reactor::Reactor(float maxTemp, float maxPressure, float maxHeatOutput)
 }
 
 void Reactor::Update(float DeltaTime) {
-	// heat calc - adds heat from fission
-	currentHeatDelta = HeatOutput;
-	currentTemp += currentHeatDelta * DeltaTime;
+	// control rod lag
 
+	float rodSpeed = 0.25f; //magic number prolly move me
+	float positionDifference = TargetControlRodPosition - ControlRodPosition;
+	ControlRodPosition += positionDifference * rodSpeed * DeltaTime;
+	// RUNAWAY REACTION BABY >:)
+	float reactivity = 0.7f - ControlRodPosition;
+	float changeInHeat = HeatOutput * reactivity * 2.0f * DeltaTime;
+
+	HeatOutput += changeInHeat;
+
+	if (HeatOutput < 0.1f) {
+		HeatOutput = 0.1f;
+	}
+	if (HeatOutput > MaxHeatOutput) {
+		HeatOutput = MaxHeatOutput;
+	}
+	// heat calc - adds heat from fission
+	currentTemp += HeatOutput * DeltaTime;
 	// basic pressure calc
 	currentPressure = 1.0f + (currentTemp - 20.0f) * 0.1f;
-
 	if (currentTemp > MaxTemp) {
 		meltdown = true;
 	}
@@ -32,10 +49,7 @@ void Reactor::Update(float DeltaTime) {
 }
 
 void Reactor::UpdateControlRodPosition(float Position) {
-	ControlRodPosition = Position;
-	// When rods are fully inserted (1.0), no heat output
-	// When rods are withdrawn (0.0), maximum heat output
-	HeatOutput = (1.0f - Position) * MaxHeatOutput;
+	TargetControlRodPosition = Position;
 }
 
 float Reactor::GetPressure() {
