@@ -9,7 +9,7 @@ CanvasManager::CanvasManager(ReactorManager *reactorManager)
 	  tempDial(0, 0, 200, 200, 0, 1000, 0, "TEMP °C"),
 	  rpmDial(300, 0, 200, 200, 0, 1000, 0, "RPM"),
 	  pressureDial(600, 0, 200, 200, 0, 60, 0, "Pressure Kpa"),
-	  powerOutputDial(900, 0, 200, 200, 0, 1000, 0, "Power Output Mw") {
+	  powerOutputDial(900, 0, 200, 200, 0, 10000, 0, "Power Output Mw") {
 	coolantSlider = new Slider(
 		GetScreenWidth() * 0.1f - 100,
 		GetScreenHeight() * 0.6f,

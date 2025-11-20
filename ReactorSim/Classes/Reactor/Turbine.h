@@ -5,8 +5,11 @@
 class Turbine {
 public:
 	Turbine(int maxRPM, int maxElectricityOut, float RPMtoElectricCharge);
-	void Update(float DeltaTime);
+
+	void Update(float DeltaTime, float heatInput);
+
 	float GetRPM();
+
 	float GetPowerOut();
 
 private:
@@ -15,8 +18,10 @@ private:
 	int MaxRPM;
 	int MaxElectricityOut;
 	float RPMtoElectricCharge;
+	float CurrentHeatInput;
 
-	void CalculateRPM();
+	void CalculateRPM(float deltaTime);
+
 	void CalculatePowerOut();
 };
 

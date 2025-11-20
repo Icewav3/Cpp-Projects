@@ -4,6 +4,7 @@
 #include <raylib.h>
 #include "Dial.h"
 #include "Slider.h"
+#include "GameManager.h"
 
 class ReactorManager;
 
@@ -22,18 +23,24 @@ private:
 
 	void UpdateUI(float deltaTime);
 
+	void DrawRevenue();
+
+	void DrawTimer();
+
 	Slider *coolantSlider;
 	Slider *controlRodSlider;
 	ReactorManager *reactorManager_;
+	GameManager *gameManager_;
 
 	Dial tempDial;
 	Dial rpmDial;
 	Dial pressureDial;
 	Dial powerOutputDial;
 
-	bool isFucked = false;
+	Font sevenSegmentFont;
+	bool fontLoaded;
 
-	void CreateSlider();
+	bool isFucked = false;
 };
 
 #endif

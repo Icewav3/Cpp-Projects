@@ -12,6 +12,8 @@ private:
 	Coolant *coolant;
 	float CurrentControlRodPosition;
 	float CurrentCoolantValuePosition;
+	float TotalRevenue;
+	float RevenueRate;
 
 public:
 	ReactorManager();
@@ -30,6 +32,12 @@ public:
 	float GetTurbineRPM() const;
 
 	float GetTurbinePowerOut() const;
+
+	float GetRevenue() const;
+
+	bool IsMeltdown() const;
+
+	bool IsKaboom() const;
 
 	//input methods
 

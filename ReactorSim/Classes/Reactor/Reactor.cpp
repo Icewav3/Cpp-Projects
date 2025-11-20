@@ -16,7 +16,7 @@ Reactor::Reactor(float maxTemp, float maxPressure, float maxHeatOutput)
 }
 
 void Reactor::Update(float DeltaTime) {
-	// heat calc
+	// heat calc - adds heat from fission
 	currentHeatDelta = HeatOutput;
 	currentTemp += currentHeatDelta * DeltaTime;
 
@@ -44,4 +44,24 @@ float Reactor::GetPressure() {
 
 float Reactor::GetTemp() {
 	return currentTemp;
+}
+
+float Reactor::GetHeatOutput() const {
+	return HeatOutput;
+}
+
+void Reactor::RemoveHeat(float heatAmount) {
+	// Coolant removes heat from reactor
+	currentTemp -= heatAmount;
+	if (currentTemp < 20.0f) {
+		currentTemp = 20.0f; // Minimum ambient temp
+	}
+}
+
+bool Reactor::IsMeltdown() const {
+	return meltdown;
+}
+
+bool Reactor::IsKaboom() const {
+	return kaboom;
 }

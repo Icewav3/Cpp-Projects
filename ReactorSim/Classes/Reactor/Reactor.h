@@ -13,6 +13,14 @@ public:
 
 	float GetTemp();
 
+	float GetHeatOutput() const;
+
+	void RemoveHeat(float heatAmount);
+
+	bool IsMeltdown() const;
+
+	bool IsKaboom() const;
+
 private:
 	float ControlRodPosition;
 	float MaxHeatOutput;
