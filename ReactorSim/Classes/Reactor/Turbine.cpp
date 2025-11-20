@@ -1,10 +1,11 @@
 ﻿#include "Turbine.h"
 #include <algorithm>
 
-Turbine::Turbine(int maxRPM, int maxElectricityOut, float RPMtoElectricCharge)
+Turbine::Turbine(int maxRPM, int maxElectricityOut, float RPMtoElectricCharge, float minRPMToGenerate = 300)
 	: MaxRPM(maxRPM)
 	  , MaxElectricityOut(maxElectricityOut)
 	  , RPMtoElectricCharge(RPMtoElectricCharge)
+	  , MinRPMToGenerate(minRPMToGenerate)
 	  , RPM(0.0f)
 	  , PowerOut(0.0f)
 	  , CurrentHeatInput(0.0f) {
@@ -24,7 +25,6 @@ float Turbine::GetPowerOut() {
 	return PowerOut;
 }
 
-//TODO HMMM
 void Turbine::CalculateRPM(float deltaTime) {
 	// Convert heat input to RPM (simplified model)
 	// Heat input directly drives turbine speed
@@ -38,7 +38,9 @@ void Turbine::CalculateRPM(float deltaTime) {
 }
 
 void Turbine::CalculatePowerOut() {
-	// Convert RPM to electrical power output (MW)
-	PowerOut = (RPM / static_cast<float>(MaxRPM)) * MaxElectricityOut * RPMtoElectricCharge;
-	PowerOut = std::clamp(PowerOut, 0.0f, static_cast<float>(MaxElectricityOut));
+	if (RPM > MinRPMToGenerate) {
+		// Convert RPM to electrical power output (MW)
+		PowerOut = ((RPM - MinRPMToGenerate) / static_cast<float>(MaxRPM)) * MaxElectricityOut * RPMtoElectricCharge;
+		PowerOut = std::clamp(PowerOut, 0.0f, static_cast<float>(MaxElectricityOut));
+	}
 }

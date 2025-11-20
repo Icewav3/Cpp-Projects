@@ -4,7 +4,7 @@
 
 class Turbine {
 public:
-	Turbine(int maxRPM, int maxElectricityOut, float RPMtoElectricCharge);
+	Turbine(int maxRPM, int maxElectricityOut, float RPMtoElectricCharge, float minRPMToGenerate);
 
 	void Update(float DeltaTime, float heatInput);
 
@@ -16,6 +16,7 @@ private:
 	float RPM;
 	float PowerOut;
 	int MaxRPM;
+	float MinRPMToGenerate;
 	int MaxElectricityOut;
 	float RPMtoElectricCharge;
 	float CurrentHeatInput;

@@ -2,10 +2,10 @@
 
 ReactorManager::ReactorManager()
 	: reactor(new Reactor(1000.0f, 60.0f, 5000.0f))
-	  , turbine(new Turbine(3000, 10000, 2.0f))
+	  , turbine(new Turbine(3000, 10000, 2.0f, 300))
 	  , coolant(new Coolant(100.0f, 0.1f))
 	  , TotalRevenue(0.0f)
-	  , RevenueRate(0.1f) {
+	  , RevenueRate(0.001f) {
 	// $0.10 per MW-second
 }
 
