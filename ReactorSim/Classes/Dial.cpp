@@ -1,5 +1,6 @@
 ﻿#include "Dial.h"
 
+#include <algorithm>
 #include <iostream>
 #include <raymath.h>
 #include <rlgl.h>
@@ -75,7 +76,7 @@ void Dial::Draw() {
 }
 
 void Dial::SetValue(float value) {
-	currentValue = value;
+	currentValue = std::clamp(minValue, maxValue, value);
 }
 
 void Dial::SetLabel(const std::string &label) {

@@ -2,22 +2,27 @@
 #include <cstdlib>
 
 
-//todo add constants to the constructor to allow for different reactor params, ensure default values for constructor for an idle state
 Reactor::Reactor(float maxTemp, float maxPressure, float maxHeatOutput)
 	: MaxTemp(maxTemp)
 	  , MaxPressure(maxPressure)
-	  , MaxHeatOutput(maxHeatOutput) {
+	  , MaxHeatOutput(maxHeatOutput)
+	  , ControlRodPosition(1.0f)
+	  , HeatOutput(0.0f)
+	  , currentTemp(20.0f)
+	  , currentPressure(1.0f)
+	  , currentHeatDelta(0.0f)
+	  , meltdown(false)
+	  , kaboom(false) {
 }
 
-bool meltdown = false;
-bool kaboom = false;
-float currentPosition = 0;
-float currentTemp = 0;
-float currentPressure = 0;
-float currentHeatDelta = 0;
-
 void Reactor::Update(float DeltaTime) {
+	// heat calc
+	currentHeatDelta = HeatOutput;
 	currentTemp += currentHeatDelta * DeltaTime;
+
+	// basic pressure calc
+	currentPressure = 1.0f + (currentTemp - 20.0f) * 0.1f;
+
 	if (currentTemp > MaxTemp) {
 		meltdown = true;
 	}
@@ -27,13 +32,16 @@ void Reactor::Update(float DeltaTime) {
 }
 
 void Reactor::UpdateControlRodPosition(float Position) {
-	HeatOutput = std::abs(1 - Position) * HeatOutput;
+	ControlRodPosition = Position;
+	// When rods are fully inserted (1.0), no heat output
+	// When rods are withdrawn (0.0), maximum heat output
+	HeatOutput = (1.0f - Position) * MaxHeatOutput;
 }
 
 float Reactor::GetPressure() {
-	return MaxPressure;
+	return currentPressure;
 }
 
 float Reactor::GetTemp() {
-	return MaxTemp;
+	return currentTemp;
 }

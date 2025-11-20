@@ -1,7 +1,6 @@
 ﻿#ifndef CPP_PROJECTS_REACTOR_H
 #define CPP_PROJECTS_REACTOR_H
 
-
 class Reactor {
 public:
 	Reactor(float maxTemp, float maxPressure, float maxHeatOutput);
@@ -20,7 +19,12 @@ private:
 	float MaxTemp;
 	float MaxPressure;
 	float HeatOutput;
-};
 
+	float currentTemp;
+	float currentPressure;
+	float currentHeatDelta;
+	bool meltdown;
+	bool kaboom;
+};
 
 #endif //CPP_PROJECTS_REACTOR_H
