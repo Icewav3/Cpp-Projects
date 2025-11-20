@@ -10,27 +10,31 @@ class ReactorManager;
 
 class CanvasManager {
 public:
-	CanvasManager(ReactorManager *reactorManager = nullptr);
+	CanvasManager();
 
 	~CanvasManager();
 
-	void Update(float deltaTime);
+	void RenderMainMenu();
 
-	void SetReactorManager(ReactorManager *reactorManager);
+	void RenderIntroSequence();
+
+	void RenderPlayMode(ReactorManager *reactorManager, GameManager *gameManager, float deltaTime);
+
+	void RenderEndScreen(const GameStatistics &stats);
 
 private:
-	void UpdateValues(float deltaTime);
+	// Play mode UI elements
+	void UpdatePlayModeControls(ReactorManager *reactorManager, float deltaTime);
 
-	void UpdateUI(float deltaTime);
+	void DrawPlayModeUI(float deltaTime);
 
-	void DrawRevenue();
+	void DrawRevenue(float revenue);
 
-	void DrawTimer();
+	void DrawTimer(GameManager *gameManager);
 
+	// UI Components
 	Slider *coolantSlider;
 	Slider *controlRodSlider;
-	ReactorManager *reactorManager_;
-	GameManager *gameManager_;
 
 	Dial tempDial;
 	Dial rpmDial;
@@ -39,8 +43,6 @@ private:
 
 	Font sevenSegmentFont;
 	bool fontLoaded;
-
-	bool isFucked = false;
 };
 
 #endif
