@@ -170,6 +170,8 @@ void CanvasManager::DrawTimer(GameManager *gameManager) {
 	}
 }
 
+
+// a bit scuffed but we good
 void CanvasManager::RenderEndScreen(const GameStatistics &stats) {
 	ClearBackground(Color{240, 230, 200, 255}); // Vintage beige
 
