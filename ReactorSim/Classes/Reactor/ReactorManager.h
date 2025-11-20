@@ -23,6 +23,8 @@ public:
 	// Accessors for UI
 	float GetReactorTemp() const;
 
+	float GetReactorPressure() const;
+
 	float GetCoolantTemp() const;
 
 	float GetTurbineRPM() const;

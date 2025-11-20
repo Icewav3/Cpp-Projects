@@ -31,6 +31,7 @@ private:
 	Dial pressureDial;
 	Dial powerOutputDial;
 
+	bool isFucked = false;
 
 	void CreateSlider();
 };

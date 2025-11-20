@@ -4,7 +4,7 @@
 
 class Reactor {
 public:
-	Reactor(float controlRodPosition, float maxTemp, float maxPressure, float maxHeatOutput);
+	Reactor(float maxTemp, float maxPressure, float maxHeatOutput);
 
 	void Update(float DeltaTime);
 
@@ -17,8 +17,8 @@ public:
 private:
 	float ControlRodPosition;
 	float MaxHeatOutput;
-	float Temp;
-	float Pressure;
+	float MaxTemp;
+	float MaxPressure;
 	float HeatOutput;
 };
 

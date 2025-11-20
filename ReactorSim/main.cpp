@@ -10,7 +10,7 @@ int main() {
 	const int screenWidth = GetMonitorWidth(0);
 	const int screenHeight = GetMonitorHeight(0);
 
-	InitWindow(screenWidth, screenHeight, "raylib empty window example");
+	InitWindow(screenWidth, screenHeight, "Reactor Simulator");
 
 	SetTargetFPS(60); // Set our game to run at 60 frames-per-second
 

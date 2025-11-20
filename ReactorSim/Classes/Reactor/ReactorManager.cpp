@@ -1,7 +1,7 @@
 ﻿#include "ReactorManager.h"
 
 ReactorManager::ReactorManager()
-	: reactor(new Reactor(0.5f, 350.0f, 100.0f, 1000.0f))
+	: reactor(new Reactor(1000.0f, 20.0f, 500.0f))
 	  , turbine(new Turbine(3000, 10000, 2.0f))
 	  , coolant(new Coolant(100.0f, 100.0f)) {
 }
@@ -14,6 +14,10 @@ ReactorManager::~ReactorManager() {
 
 float ReactorManager::GetReactorTemp() const {
 	return reactor->GetTemp();
+}
+
+float ReactorManager::GetReactorPressure() const {
+	return reactor->GetPressure();
 }
 
 float ReactorManager::GetCoolantTemp() const {

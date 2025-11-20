@@ -2,20 +2,28 @@
 #include <cstdlib>
 
 
-//todo add constsants to the constructor to allow for different reactor params, ensure defualt values for constructor for an idle state
-Reactor::Reactor(float controlRodPosition, float maxTemp, float maxPressure, float maxHeatOutput)
-	: ControlRodPosition(controlRodPosition)
-	  , Temp(maxTemp)
-	  , Pressure(maxPressure)
+//todo add constants to the constructor to allow for different reactor params, ensure default values for constructor for an idle state
+Reactor::Reactor(float maxTemp, float maxPressure, float maxHeatOutput)
+	: MaxTemp(maxTemp)
+	  , MaxPressure(maxPressure)
 	  , MaxHeatOutput(maxHeatOutput) {
 }
 
+bool meltdown = false;
+bool kaboom = false;
+float currentPosition = 0;
 float currentTemp = 0;
 float currentPressure = 0;
 float currentHeatDelta = 0;
 
 void Reactor::Update(float DeltaTime) {
 	currentTemp += currentHeatDelta * DeltaTime;
+	if (currentTemp > MaxTemp) {
+		meltdown = true;
+	}
+	if (currentPressure > MaxPressure) {
+		kaboom = true;
+	}
 }
 
 void Reactor::UpdateControlRodPosition(float Position) {
@@ -23,9 +31,9 @@ void Reactor::UpdateControlRodPosition(float Position) {
 }
 
 float Reactor::GetPressure() {
-	return Pressure;
+	return MaxPressure;
 }
 
 float Reactor::GetTemp() {
-	return Temp;
+	return MaxTemp;
 }

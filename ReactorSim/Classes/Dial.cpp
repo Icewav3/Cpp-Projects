@@ -74,7 +74,7 @@ void Dial::Draw() {
 	}
 }
 
-void Dial::SetTargetValue(float value) {
+void Dial::SetValue(float value) {
 	currentValue = value;
 }
 
